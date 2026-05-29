@@ -114,7 +114,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     return ValueListenableBuilder<int>(
       valueListenable: DataService.notifier,
       builder: (context, _, __) {
-        final dates = DataService.getAvailableDates();
+        final dates = DataService.getRegisterableDates();
 
         return SingleChildScrollView(
           padding: const EdgeInsets.all(32),
@@ -295,7 +295,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         value: _selectedTime,
                         hint: 'Select time',
                         icon: Icons.access_time_outlined,
-                        items: (_selectedDate == null ? <String>[] : DataService.getTimesForDate(_selectedDate!))
+                        items: (_selectedDate == null ? <String>[] : DataService.getRegisterableTimesForDate(_selectedDate!))
                             .map(
                               (t) => DropdownMenuItem(value: t, child: Text(t)),
                             )

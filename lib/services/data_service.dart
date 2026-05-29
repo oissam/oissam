@@ -192,6 +192,41 @@ class DataService {
   static List<String> getTimesForDate(String date) =>
       (_schedules[date]?.toList() ?? [])..sort();
 
+  static bool _isAtLeastOneHourAway(String dateStr, String timeStr, DateTime now) {
+    try {
+      final parts = dateStr.split('-');
+      final timeParts = timeStr.split(':');
+      if (parts.length == 3 && timeParts.length == 2) {
+        final examDate = DateTime(
+          int.parse(parts[0]),
+          int.parse(parts[1]),
+          int.parse(parts[2]),
+          int.parse(timeParts[0]),
+          int.parse(timeParts[1]),
+        );
+        return examDate.difference(now).inMinutes >= 60;
+      }
+    } catch (_) {}
+    return true; // Default to true if parsing fails
+  }
+
+  static List<String> getRegisterableDates() {
+    final now = DateTime.now();
+    return _schedules.keys.where((dateStr) {
+      final times = _schedules[dateStr] ?? [];
+      for (final timeStr in times) {
+        if (_isAtLeastOneHourAway(dateStr, timeStr, now)) return true;
+      }
+      return false;
+    }).toList()..sort();
+  }
+
+  static List<String> getRegisterableTimesForDate(String date) {
+    final now = DateTime.now();
+    final times = _schedules[date]?.toList() ?? [];
+    return times.where((timeStr) => _isAtLeastOneHourAway(date, timeStr, now)).toList()..sort();
+  }
+
   static List<String> getAllTimes() {
     final Set<String> allTimes = {};
     for (final times in _schedules.values) {
