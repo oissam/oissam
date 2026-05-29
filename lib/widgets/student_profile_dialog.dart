@@ -153,6 +153,30 @@ class StudentProfileDialog extends StatelessWidget {
                         ),
                       ]),
 
+                      if (student.commentary != null && student.commentary!.isNotEmpty) ...[
+                        const SizedBox(height: 16),
+                        _section('Call Center Commentary', Icons.notes_rounded, [
+                          const SizedBox(height: 8),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: AppTheme.surface,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: AppTheme.border),
+                            ),
+                            child: Text(
+                              student.commentary!,
+                              style: GoogleFonts.nunito(
+                                color: AppTheme.textPrimary,
+                                fontSize: 13,
+                                height: 1.5,
+                              ),
+                            ),
+                          ),
+                        ]),
+                      ],
+
                       // Results (if available)
                       if (result != null) ...[
                         const SizedBox(height: 16),

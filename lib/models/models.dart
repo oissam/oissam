@@ -12,6 +12,7 @@ class Student {
   final String examTime;
   final String examRoom;
   final DateTime registeredAt;
+  final String? commentary;
 
   Student({
     required this.id,
@@ -25,6 +26,7 @@ class Student {
     required this.examTime,
     required this.examRoom,
     required this.registeredAt,
+    this.commentary,
   });
 
   String get fullName => '$firstName $lastName';
@@ -47,20 +49,24 @@ class Student {
         'exam_time': examTime,
         'exam_room': examRoom,
         'registered_at': registeredAt.toIso8601String(),
+        'commentary': commentary,
       };
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
         id: json['id'],
-        firstName: json['first_name'] ?? json['firstName'], // Fallback for old Hive data if needed, but not required for new Supabase DB
+        firstName: json['first_name'] ?? json['firstName'],
         lastName: json['last_name'] ?? json['lastName'],
         studentClass: json['student_class'] ?? json['studentClass'],
         language: json['language'],
         phone1: json['phone1'],
         phone2: json['phone2'],
         examDate: json['exam_date'] ?? json['examDate'],
-        examTime: json['exam_time'] ?? json['examTime'],
-        examRoom: json['exam_room'] ?? json['examRoom'],
-        registeredAt: DateTime.parse(json['registered_at'] ?? json['registeredAt']),
+        examTime: json['exam_time'] ?? '',
+        examRoom: json['exam_room'] ?? '',
+        registeredAt: json['registered_at'] != null
+            ? DateTime.parse(json['registered_at'])
+            : DateTime.now(),
+        commentary: json['commentary'],
       );
 }
 

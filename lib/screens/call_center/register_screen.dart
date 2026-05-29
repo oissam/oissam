@@ -21,6 +21,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
   final _lastNameCtrl = TextEditingController();
   final _phone1Ctrl = TextEditingController();
   final _phone2Ctrl = TextEditingController();
+  final _commentaryCtrl = TextEditingController();
 
   final _phoneFormatter = MaskTextInputFormatter(
     mask: '+998 ## ### ####',
@@ -41,6 +42,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     _lastNameCtrl.dispose();
     _phone1Ctrl.dispose();
     _phone2Ctrl.dispose();
+    _commentaryCtrl.dispose();
     super.dispose();
   }
 
@@ -73,6 +75,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
       examTime: _selectedTime!,
       examRoom: _selectedRoom!,
       registeredAt: DateTime.now(),
+      commentary: _commentaryCtrl.text.trim().isEmpty ? null : _commentaryCtrl.text.trim(),
     );
 
     await DataService.addStudent(student);
@@ -100,6 +103,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     _lastNameCtrl.clear();
     _phone1Ctrl.clear();
     _phone2Ctrl.clear();
+    _commentaryCtrl.clear();
     setState(() {
       _selectedClass = null;
       _selectedLanguage = null;
@@ -260,6 +264,15 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           }
                           return null;
                         },
+                      ),
+                      const SizedBox(height: 16),
+                      StyledTextField(
+                        label: 'Commentary (Optional)',
+                        controller: _commentaryCtrl,
+                        hint: 'Notes, special requests, etc.',
+                        icon: Icons.notes,
+                        required: false,
+                        maxLines: 3,
                       ),
                     ],
                   ),
