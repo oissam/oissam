@@ -280,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     const EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24)),
-                                backgroundColor: AppTheme.primary,
+                                backgroundColor: AppTheme.accent,
                               ),
                               child: _isLoading
                                   ? const SizedBox(
