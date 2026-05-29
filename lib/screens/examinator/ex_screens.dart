@@ -460,6 +460,9 @@ class TimetableScreen extends StatelessWidget {
       grouped[s.examDate]![s.examTime]![s.examRoom]!.add(s);
     }
     final sortedDates = grouped.keys.toList()..sort();
+    
+    final now = DateTime.now();
+    final nowStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     return Padding(
       padding: const EdgeInsets.all(32),
@@ -575,6 +578,25 @@ class TimetableScreen extends StatelessWidget {
                                             color: AppTheme.accent,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600)),
+                                    if ('$date $time'.compareTo(nowStr) < 0)
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 6, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.danger.withValues(alpha: 0.1),
+                                            borderRadius: BorderRadius.circular(4),
+                                            border: Border.all(
+                                                color: AppTheme.danger.withValues(alpha: 0.3)),
+                                          ),
+                                          child: Text('Past',
+                                              style: GoogleFonts.nunito(
+                                                  color: AppTheme.danger,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w700)),
+                                        ),
+                                      ),
                                     const SizedBox(width: 8),
                                     const Expanded(
                                         child: Divider(
