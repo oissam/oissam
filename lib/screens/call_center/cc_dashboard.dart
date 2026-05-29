@@ -56,9 +56,12 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
         }).length;
         final failedStudents = withResults - passedStudents;
 
-        final todayStr = DateTime.now().toString().split(' ')[0];
+        final now = DateTime.now();
+        final nowStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+        final todayStr = nowStr.substring(0, 10);
+        
         final todayExams = allStudents.where((s) => s.examDate == todayStr).map((s) => '${s.examTime}-${s.examRoom}').toSet().length;
-        final upcomingExams = allStudents.where((s) => s.examDate.compareTo(todayStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
+        final upcomingExams = allStudents.where((s) => '${s.examDate} ${s.examTime}'.compareTo(nowStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
 
         return Padding(
           padding: const EdgeInsets.all(32),
@@ -340,7 +343,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
               child: Row(
                 children: [
                   _cell(student.examDate),
-                  if (student.examDate.compareTo(DateTime.now().toString().split(' ')[0]) < 0)
+                  if ('${student.examDate} ${student.examTime}'.compareTo(nowStr) < 0)
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Container(

@@ -41,13 +41,16 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
       builder: (context, _, __) {
         final uniqueDates = DataService.getAvailableDates();
         
-        final todayStr = DateTime.now().toString().split(' ')[0];
+        final now = DateTime.now();
+        final nowStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+        final todayStr = nowStr.substring(0, 10);
+        
         final allStudents = DataService.getAllStudents();
         
         // Count unique exam sessions (date + time + room)
         final todaySessions = allStudents.where((s) => s.examDate == todayStr).map((s) => '${s.examTime}-${s.examRoom}').toSet().length;
-        final upcomingSessions = allStudents.where((s) => s.examDate.compareTo(todayStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
-        final pastSessions = allStudents.where((s) => s.examDate.compareTo(todayStr) < 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
+        final upcomingSessions = allStudents.where((s) => '${s.examDate} ${s.examTime}'.compareTo(nowStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
+        final pastSessions = allStudents.where((s) => '${s.examDate} ${s.examTime}'.compareTo(nowStr) < 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
 
         // Count passed/failed students
         final withResults = allStudents.where((s) => DataService.hasResult(s.id));
@@ -343,7 +346,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
               child: Row(
                 children: [
                   _cell(s.examDate),
-                  if (s.examDate.compareTo(DateTime.now().toString().split(' ')[0]) < 0)
+                  if ('${s.examDate} ${s.examTime}'.compareTo(nowStr) < 0)
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Container(
