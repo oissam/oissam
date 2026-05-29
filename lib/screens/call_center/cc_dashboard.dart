@@ -69,12 +69,9 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Stats row
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
+              Row(
                 children: [
-                  SizedBox(
-                    width: 180,
+                  Expanded(
                     child: StatCard(
                       title: 'Total Students',
                       value: allStudents.length.toString(),
@@ -83,8 +80,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       isDark: false,
                     ),
                   ),
-                  SizedBox(
-                    width: 180,
+                  const SizedBox(width: 12),
+                  Expanded(
                     child: StatCard(
                       title: 'Results Ready',
                       value: withResults.toString(),
@@ -92,8 +89,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.success,
                     ),
                   ),
-                  SizedBox(
-                    width: 180,
+                  const SizedBox(width: 12),
+                  Expanded(
                     child: StatCard(
                       title: 'Passed Students',
                       value: passedStudents.toString(),
@@ -101,8 +98,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.success,
                     ),
                   ),
-                  SizedBox(
-                    width: 180,
+                  const SizedBox(width: 12),
+                  Expanded(
                     child: StatCard(
                       title: 'Failed Students',
                       value: failedStudents.toString(),
@@ -110,8 +107,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.danger,
                     ),
                   ),
-                  SizedBox(
-                    width: 180,
+                  const SizedBox(width: 12),
+                  Expanded(
                     child: StatCard(
                       title: 'Awaiting',
                       value: (allStudents.length - withResults).toString(),
@@ -119,8 +116,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.warning,
                     ),
                   ),
-                  SizedBox(
-                    width: 180,
+                  const SizedBox(width: 12),
+                  Expanded(
                     child: StatCard(
                       title: "Today's Exams",
                       value: todayExams.toString(),
@@ -128,8 +125,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.accent,
                     ),
                   ),
-                  SizedBox(
-                    width: 180,
+                  const SizedBox(width: 12),
+                  Expanded(
                     child: StatCard(
                       title: 'Upcoming Exams',
                       value: upcomingExams.toString(),
