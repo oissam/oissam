@@ -199,19 +199,34 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: AppTheme.border),
                         ),
-                        child: Column(
-                          children: [
-                            _tableHeader(),
-                            Expanded(
-                              child: ListView.separated(
-                                itemCount: _filtered.length,
-                                separatorBuilder: (_, _) => Divider(
-                                    height: 1, color: AppTheme.border),
-                                itemBuilder: (ctx, i) =>
-                                    _studentRow(_filtered[i]),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minWidth: 900,
+                                ),
+                                child: SizedBox(
+                                  width: constraints.maxWidth > 900 ? constraints.maxWidth : 900,
+                                  child: Column(
+                                    children: [
+                                      _tableHeader(),
+                                      Expanded(
+                                        child: ListView.separated(
+                                          itemCount: _filtered.length,
+                                          separatorBuilder: (_, _) => Divider(
+                                              height: 1, color: AppTheme.border),
+                                          itemBuilder: (ctx, i) =>
+                                              _studentRow(_filtered[i]),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
+                            );
+                          }
                         ),
                       ),
               ),

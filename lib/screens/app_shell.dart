@@ -135,6 +135,67 @@ class _ShellLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.sizeOf(context).width < 800;
+
+    if (isMobile) {
+      return Scaffold(
+        backgroundColor: AppTheme.background,
+        appBar: AppBar(
+          backgroundColor: AppTheme.surface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          title: Text(
+            navItems[selectedIndex].label,
+            style: GoogleFonts.nunito(
+              color: AppTheme.textPrimary,
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          actions: [
+            ValueListenableBuilder<ThemeMode>(
+              valueListenable: AppTheme.themeNotifier,
+              builder: (context, themeMode, _) {
+                final isDark = themeMode == ThemeMode.dark;
+                return IconButton(
+                  icon: Icon(
+                    isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                    color: AppTheme.textSecondary,
+                  ),
+                  onPressed: () {
+                    AppTheme.themeNotifier.value =
+                        isDark ? ThemeMode.light : ThemeMode.dark;
+                  },
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.logout_rounded, color: AppTheme.danger),
+              onPressed: onLogout,
+            ),
+          ],
+        ),
+        body: body,
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: AppTheme.surface,
+          selectedItemColor: AppTheme.accent,
+          unselectedItemColor: AppTheme.textMuted,
+          currentIndex: selectedIndex,
+          onTap: onSelect,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle: GoogleFonts.nunito(fontWeight: FontWeight.w700, fontSize: 12),
+          unselectedLabelStyle: GoogleFonts.nunito(fontWeight: FontWeight.w600, fontSize: 11),
+          items: navItems.map((item) {
+            return BottomNavigationBarItem(
+              icon: Icon(item.icon),
+              label: item.label,
+            );
+          }).toList(),
+        ),
+      );
+    }
+
+    // Desktop Layout
     return Scaffold(
       backgroundColor: AppTheme.background,
       body: Padding(
