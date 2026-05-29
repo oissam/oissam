@@ -117,13 +117,12 @@ class _LoginScreenState extends State<LoginScreen>
           child: FadeTransition(
             opacity: _fadeAnimation,
             child: SingleChildScrollView(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Left branding panel
-                  Container(
-                    width: 420,
-                    padding: EdgeInsets.all(60),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final isMobile = constraints.maxWidth < 800;
+                  final leftPanel = Container(
+                    width: isMobile ? double.infinity : 420,
+                    padding: EdgeInsets.all(isMobile ? 32 : 60),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -142,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen>
                         Text('Internal\nExam Planner',
                             style: GoogleFonts.nunito(
                                 color: AppTheme.textPrimary,
-                                fontSize: 40,
+                                fontSize: isMobile ? 32 : 40,
                                 fontWeight: FontWeight.w800,
                                 height: 1.1)),
                         SizedBox(height: 16),
@@ -154,17 +153,19 @@ class _LoginScreenState extends State<LoginScreen>
                               height: 1.6),
                         ),
                         SizedBox(height: 48),
-                        _featureRow(Icons.people_alt_rounded, 'Student Management'),
-                        SizedBox(height: 12),
-                        _featureRow(Icons.calendar_month_rounded, 'Exam Scheduling'),
-                        SizedBox(height: 12),
-                        _featureRow(Icons.analytics_rounded, 'Smart Score Calculator'),
+                        if (!isMobile) ...[
+                          _featureRow(Icons.people_alt_rounded, 'Student Management'),
+                          SizedBox(height: 12),
+                          _featureRow(Icons.calendar_month_rounded, 'Exam Scheduling'),
+                          SizedBox(height: 12),
+                          _featureRow(Icons.analytics_rounded, 'Smart Score Calculator'),
+                        ],
                       ],
                     ),
-                  ),
-                  // Right login card
-                  Container(
-                    width: 420,
+                  );
+
+                  final rightPanel = Container(
+                    width: isMobile ? double.infinity : 420,
                     margin: EdgeInsets.all(24),
                     padding: EdgeInsets.all(40),
                     decoration: BoxDecoration(
@@ -302,8 +303,18 @@ class _LoginScreenState extends State<LoginScreen>
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  );
+
+                  return isMobile 
+                    ? Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [leftPanel, rightPanel],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [leftPanel, rightPanel],
+                      );
+                }
               ),
             ),
           ),
