@@ -43,8 +43,19 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
         
         final todayStr = DateTime.now().toString().split(' ')[0];
         final allStudents = DataService.getAllStudents();
-        final todayExams = allStudents.where((s) => s.examDate == todayStr).length;
-        final upcomingExams = allStudents.where((s) => s.examDate.compareTo(todayStr) > 0).length;
+        
+        // Count unique exam sessions (date + time + room)
+        final todaySessions = allStudents.where((s) => s.examDate == todayStr).map((s) => '${s.examTime}-${s.examRoom}').toSet().length;
+        final upcomingSessions = allStudents.where((s) => s.examDate.compareTo(todayStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
+        final pastSessions = allStudents.where((s) => s.examDate.compareTo(todayStr) < 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
+
+        // Count passed/failed students
+        final withResults = allStudents.where((s) => DataService.hasResult(s.id));
+        final passedCount = withResults.where((s) {
+          final result = DataService.getResult(s.id)!;
+          return result.isPassed ?? result.overallPercent >= 50;
+        }).length;
+        final failedCount = withResults.length - passedCount;
 
         return Padding(
           padding: const EdgeInsets.all(32),
@@ -83,7 +94,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                   Expanded(
                     child: StatCard(
                       title: "Today's Exams",
-                      value: todayExams.toString(),
+                      value: todaySessions.toString(),
                       icon: Icons.today_rounded,
                       color: AppTheme.examinatorColor,
                       isDark: false,
@@ -93,9 +104,39 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                   Expanded(
                     child: StatCard(
                       title: 'Upcoming Exams',
-                      value: upcomingExams.toString(),
+                      value: upcomingSessions.toString(),
                       icon: Icons.next_plan_outlined,
                       color: AppTheme.examinatorColor,
+                      isDark: false,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: StatCard(
+                      title: 'Past Exams',
+                      value: pastSessions.toString(),
+                      icon: Icons.history_rounded,
+                      color: AppTheme.examinatorColor,
+                      isDark: false,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: StatCard(
+                      title: 'Passed Students',
+                      value: passedCount.toString(),
+                      icon: Icons.thumb_up_alt_outlined,
+                      color: AppTheme.success,
+                      isDark: false,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: StatCard(
+                      title: 'Failed Students',
+                      value: failedCount.toString(),
+                      icon: Icons.thumb_down_alt_outlined,
+                      color: AppTheme.danger,
                       isDark: false,
                     ),
                   ),

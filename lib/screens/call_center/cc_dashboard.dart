@@ -57,8 +57,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
         final failedStudents = withResults - passedStudents;
 
         final todayStr = DateTime.now().toString().split(' ')[0];
-        final todayExams = allStudents.where((s) => s.examDate == todayStr).length;
-        final upcomingExams = allStudents.where((s) => s.examDate.compareTo(todayStr) > 0).length;
+        final todayExams = allStudents.where((s) => s.examDate == todayStr).map((s) => '${s.examTime}-${s.examRoom}').toSet().length;
+        final upcomingExams = allStudents.where((s) => s.examDate.compareTo(todayStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
 
         return Padding(
           padding: const EdgeInsets.all(32),
