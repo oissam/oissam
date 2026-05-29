@@ -6,7 +6,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/shared_widgets.dart';
 
 class EnterResultsScreen extends StatefulWidget {
-  const EnterResultsScreen({super.key});
+  EnterResultsScreen({super.key});
 
   @override
   State<EnterResultsScreen> createState() => _EnterResultsScreenState();
@@ -173,13 +173,13 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: DataService.notifier,
-      builder: (context, _, __) {
+      builder: (context, _, _) {
         final students = DataService.getAllStudents();
         final hasCalcData = _mathTotalCtrl.text.isNotEmpty ||
             _engTotalCtrl.text.isNotEmpty;
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: EdgeInsets.all(32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -187,15 +187,15 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: AppTheme.success.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Icon(Icons.assignment_turned_in_rounded,
+                child: Icon(Icons.assignment_turned_in_rounded,
                     color: AppTheme.success, size: 22),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -211,7 +211,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32),
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,7 +224,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                   children: [
                     // Student selector
                     _sectionLabel('Select Student', Icons.person_search_rounded),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _card(
                       child: students.isEmpty
                           ? Text('No students registered yet.',
@@ -238,15 +238,15 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                         color: AppTheme.textSecondary,
                                         fontSize: 13,
                                         fontWeight: FontWeight.w500)),
-                                const SizedBox(height: 6),
+                                SizedBox(height: 6),
                                 DropdownButtonFormField<String>(
-                                  value: _selectedStudent?.id,
+                                  initialValue: _selectedStudent?.id,
                                   hint: Text('Choose a student...',
                                       style: GoogleFonts.nunito(
                                           color: AppTheme.textMuted,
                                           fontSize: 14)),
                                   isExpanded: true,
-                                  icon: const Icon(Icons.expand_more,
+                                  icon: Icon(Icons.expand_more,
                                       color: AppTheme.textSecondary),
                                   dropdownColor: AppTheme.card,
                                   borderRadius: BorderRadius.circular(24),
@@ -256,26 +256,26 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: AppTheme.surface,
-                                    prefixIcon: const Icon(
+                                    prefixIcon: Icon(
                                         Icons.person_outline,
                                         color: AppTheme.textMuted,
                                         size: 18),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(24),
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                           color: AppTheme.border),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(24),
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                           color: AppTheme.border),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(24),
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                           color: AppTheme.accent, width: 2),
                                     ),
-                                    contentPadding: const EdgeInsets.symmetric(
+                                    contentPadding: EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 14),
                                   ),
                                   items: students
@@ -288,7 +288,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                                       color:
                                                           AppTheme.textPrimary,
                                                       fontSize: 14)),
-                                              const SizedBox(width: 8),
+                                              SizedBox(width: 8),
                                               Text(
                                                   '• ${s.examDate} ${s.examTime} ${s.examRoom}',
                                                   style: GoogleFonts.nunito(
@@ -307,11 +307,11 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                               ],
                             ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Math scores
                     _sectionLabel('Math Score', Icons.calculate_rounded),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _card(
                       child: _scoreRow(
                         'Math',
@@ -320,12 +320,12 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                         _mathPct,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // English scores
                     _sectionLabel(
                         'English Score', Icons.menu_book_rounded),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _card(
                       child: Column(
                         children: [
@@ -335,14 +335,14 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                             _engTotalCtrl,
                             _engPct,
                           ),
-                          const SizedBox(height: 16),
-                          const Divider(color: AppTheme.border, height: 1),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
+                          Divider(color: AppTheme.border, height: 1),
+                          SizedBox(height: 16),
                           // Student Essay
                           Row(
                             children: [
-                              const Icon(Icons.notes_rounded, color: AppTheme.textMuted, size: 18),
-                              const SizedBox(width: 8),
+                              Icon(Icons.notes_rounded, color: AppTheme.textMuted, size: 18),
+                              SizedBox(width: 8),
                               Text('Student Essay',
                                   style: GoogleFonts.nunito(
                                       color: AppTheme.textSecondary,
@@ -350,7 +350,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                       fontWeight: FontWeight.w500)),
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10),
                           TextField(
                             controller: _essayTextCtrl,
                             maxLines: null,
@@ -363,20 +363,20 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                               fillColor: AppTheme.surface,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: AppTheme.border),
+                                borderSide: BorderSide(color: AppTheme.border),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: AppTheme.border),
+                                borderSide: BorderSide(color: AppTheme.border),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: AppTheme.accent, width: 2),
+                                borderSide: BorderSide(color: AppTheme.accent, width: 2),
                               ),
-                              contentPadding: const EdgeInsets.all(16),
+                              contentPadding: EdgeInsets.all(16),
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: OutlinedButton.icon(
@@ -392,42 +392,42 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                   );
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
+                                    SnackBar(
                                       content: Text('Select some text to highlight as a mistake'),
                                       backgroundColor: AppTheme.warning,
                                     ),
                                   );
                                 }
                               },
-                              icon: const Icon(Icons.highlight_alt_rounded, size: 16),
-                              label: const Text('Highlight Mistake'),
+                              icon: Icon(Icons.highlight_alt_rounded, size: 16),
+                              label: Text('Highlight Mistake'),
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: AppTheme.danger,
-                                side: const BorderSide(color: AppTheme.danger),
+                                side: BorderSide(color: AppTheme.danger),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          const Divider(color: AppTheme.border, height: 1),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
+                          Divider(color: AppTheme.border, height: 1),
+                          SizedBox(height: 16),
                           // Essay CEFR
                           Row(
                             children: [
-                              const Icon(Icons.edit_note_rounded,
+                              Icon(Icons.edit_note_rounded,
                                   color: AppTheme.textMuted, size: 18),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Text('Essay CEFR Level',
                                   style: GoogleFonts.nunito(
                                       color: AppTheme.textSecondary,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500)),
-                              const Spacer(),
+                              Spacer(),
                               ...DataService.essayGrades.map((g) =>
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 8),
+                                    padding: EdgeInsets.only(left: 8),
                                     child: _cefrChip(g),
                                   )),
                             ],
@@ -435,15 +435,15 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     _card(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.comment_rounded, color: AppTheme.textSecondary, size: 18),
-                              const SizedBox(width: 8),
+                              Icon(Icons.comment_rounded, color: AppTheme.textSecondary, size: 18),
+                              SizedBox(width: 8),
                               Text('Commentary / Feedback',
                                   style: GoogleFonts.nunito(
                                       color: AppTheme.textSecondary,
@@ -451,7 +451,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                       fontWeight: FontWeight.w500)),
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10),
                           TextField(
                             controller: _commentaryCtrl,
                             maxLines: 3,
@@ -463,41 +463,41 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                               fillColor: AppTheme.surface,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: AppTheme.border),
+                                borderSide: BorderSide(color: AppTheme.border),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: AppTheme.border),
+                                borderSide: BorderSide(color: AppTheme.border),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: AppTheme.accent, width: 2),
+                                borderSide: BorderSide(color: AppTheme.accent, width: 2),
                               ),
-                              contentPadding: const EdgeInsets.all(16),
+                              contentPadding: EdgeInsets.all(16),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32),
 
                     // Action buttons
                     Row(
                       children: [
                         OutlinedButton.icon(
                           onPressed: _clearForm,
-                          icon: const Icon(Icons.refresh, size: 18),
-                          label: const Text('Clear'),
+                          icon: Icon(Icons.refresh, size: 18),
+                          label: Text('Clear'),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppTheme.textSecondary,
-                            side: const BorderSide(color: AppTheme.border),
-                            padding: const EdgeInsets.symmetric(
+                            side: BorderSide(color: AppTheme.border),
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 14),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24)),
                           ),
                         ),
-                        const Spacer(),
+                        Spacer(),
                         Row(
                           children: [
                             Text(
@@ -508,10 +508,10 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12),
                             SegmentedButton<bool>(
                               emptySelectionAllowed: true,
-                              segments: const [
+                              segments: [
                                 ButtonSegment(
                                   value: true,
                                   icon: Icon(Icons.check_circle_outline, size: 22),
@@ -528,7 +528,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                 setState(() => _isPassed = set.first);
                               },
                               style: ButtonStyle(
-                                padding: const WidgetStatePropertyAll(
+                                padding: WidgetStatePropertyAll(
                                   EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                                 ),
                                 textStyle: WidgetStatePropertyAll(
@@ -558,22 +558,22 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         ElevatedButton.icon(
                           onPressed: _isSaving ? null : _save,
                           icon: _isSaving
-                              ? const SizedBox(
+                              ? SizedBox(
                                   height: 16,
                                   width: 16,
                                   child: CircularProgressIndicator(
                                       strokeWidth: 2, color: Colors.white),
                                 )
-                              : const Icon(Icons.save_rounded, size: 18),
+                              : Icon(Icons.save_rounded, size: 18),
                           label: Text(
                               _isSaving ? 'Saving...' : 'Save Results'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppTheme.success,
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 28, vertical: 14),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24)),
@@ -585,7 +585,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                 ),
               ),
 
-              const SizedBox(width: 24),
+              SizedBox(width: 24),
 
               // Right: Smart Calculator Panel
               Expanded(
@@ -593,7 +593,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                 child: Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(24),
+                      padding: EdgeInsets.all(24),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
@@ -616,15 +616,15 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                           Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: AppTheme.success.withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: const Icon(Icons.auto_graph_rounded,
+                                child: Icon(Icons.auto_graph_rounded,
                                     color: AppTheme.success, size: 18),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
                               Text('Smart Calculator',
                                   style: GoogleFonts.nunito(
                                       color: AppTheme.textPrimary,
@@ -632,7 +632,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                       fontWeight: FontWeight.w700)),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24),
 
                           // Big percent display
                           Center(
@@ -642,8 +642,8 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                   tween: Tween(
                                       begin: 0, end: _overallPct),
                                   duration:
-                                      const Duration(milliseconds: 500),
-                                  builder: (_, val, __) => Text(
+                                      Duration(milliseconds: 500),
+                                  builder: (_, val, _) => Text(
                                     '${val.toStringAsFixed(1)}%',
                                     style: GoogleFonts.nunito(
                                         color: hasCalcData
@@ -653,7 +653,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                         fontWeight: FontWeight.w800),
                                   ),
                                 ),
-                                const SizedBox(height: 8),
+                                SizedBox(height: 8),
                                 if (hasCalcData && _grade.isNotEmpty)
                                   GradeBadge(grade: _grade)
                                 else
@@ -664,18 +664,18 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 28),
+                          SizedBox(height: 28),
 
                           // Score bars
                           ScoreBar(label: 'Math', percent: _mathPct),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           ScoreBar(label: 'English', percent: _engPct),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           ScoreBar(
                               label: 'Overall', percent: _overallPct),
 
                           if (_essayGrade != null) ...[
-                            const SizedBox(height: 16),
+                            SizedBox(height: 16),
                             Row(
                               mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
@@ -689,24 +689,24 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                             ),
                           ],
 
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24),
 
                           // Grade key
-                          const Divider(color: AppTheme.border),
-                          const SizedBox(height: 12),
+                          Divider(color: AppTheme.border),
+                          SizedBox(height: 12),
                           Text('Grade Scale',
                               style: GoogleFonts.nunito(
                                   color: AppTheme.textMuted,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
                                   letterSpacing: 0.5)),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           _gradeKey(
                               '≥ 80%', 'Good', AppTheme.success),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           _gradeKey(
                               '50–79%', 'Middle', AppTheme.warning),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           _gradeKey(
                               '< 50%', 'Bad', AppTheme.danger),
                         ],
@@ -741,7 +741,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                   Text('Answered',
                       style: GoogleFonts.nunito(
                           color: AppTheme.textSecondary, fontSize: 12)),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6),
                   TextField(
                     controller: answeredCtrl,
                     keyboardType: TextInputType.number,
@@ -757,19 +757,19 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide:
-                            const BorderSide(color: AppTheme.border),
+                            BorderSide(color: AppTheme.border),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide:
-                            const BorderSide(color: AppTheme.border),
+                            BorderSide(color: AppTheme.border),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                             color: AppTheme.accent, width: 2),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                           horizontal: 12, vertical: 12),
                     ),
                   ),
@@ -777,10 +777,10 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  const SizedBox(height: 18),
+                  SizedBox(height: 18),
                   Text('out of',
                       style: GoogleFonts.nunito(
                           color: AppTheme.textMuted, fontSize: 13)),
@@ -794,7 +794,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                   Text('Total Questions',
                       style: GoogleFonts.nunito(
                           color: AppTheme.textSecondary, fontSize: 12)),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6),
                   TextField(
                     controller: totalCtrl,
                     keyboardType: TextInputType.number,
@@ -811,26 +811,26 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide:
-                            const BorderSide(color: AppTheme.border),
+                            BorderSide(color: AppTheme.border),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide:
-                            const BorderSide(color: AppTheme.border),
+                            BorderSide(color: AppTheme.border),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                             color: AppTheme.accent, width: 2),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                           horizontal: 12, vertical: 12),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             // Live percent badge
             Container(
               width: 70,
@@ -872,8 +872,8 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
     return GestureDetector(
       onTap: () => setState(() => _essayGrade = level),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        duration: Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? color.withOpacity(0.2) : AppTheme.surface,
           borderRadius: BorderRadius.circular(8),
@@ -917,7 +917,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
     return Row(
       children: [
         Icon(icon, color: AppTheme.accent, size: 18),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         Text(title,
             style: GoogleFonts.nunito(
                 color: AppTheme.textPrimary,
@@ -929,7 +929,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
 
   Widget _card({required Widget child}) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppTheme.card,
         borderRadius: BorderRadius.circular(16),
@@ -947,11 +947,11 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
             height: 8,
             decoration:
                 BoxDecoration(color: color, shape: BoxShape.circle)),
-        const SizedBox(width: 6),
+        SizedBox(width: 6),
         Text(range,
             style: GoogleFonts.nunito(
                 color: AppTheme.textMuted, fontSize: 11)),
-        const Spacer(),
+        Spacer(),
         Text(label,
             style: GoogleFonts.nunito(
                 color: color, fontSize: 11, fontWeight: FontWeight.w600)),
@@ -1000,3 +1000,5 @@ class EssayTextController extends TextEditingController {
     return TextSpan(style: style, children: children);
   }
 }
+
+

@@ -14,7 +14,7 @@ class StatCard extends StatelessWidget {
   final bool isDark;
   final String? trend;
 
-  const StatCard({
+  StatCard({
     super.key,
     required this.title,
     required this.value,
@@ -31,7 +31,7 @@ class StatCard extends StatelessWidget {
     final valueColor = isDark ? Colors.white : AppTheme.textPrimary;
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(24),
@@ -43,7 +43,7 @@ class StatCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.15)
@@ -55,23 +55,23 @@ class StatCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(value,
               style: GoogleFonts.nunito(
                   color: valueColor,
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
                   letterSpacing: -0.5)),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(title,
               style: GoogleFonts.nunito(color: titleColor, fontSize: 13)),
           if (trend != null) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Row(
               children: [
-                const Icon(Icons.trending_up,
+                Icon(Icons.trending_up,
                     color: AppTheme.success, size: 14),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Text(trend!,
                     style: GoogleFonts.nunito(
                         color: AppTheme.success,
@@ -92,7 +92,7 @@ class ScoreBar extends StatelessWidget {
   final String label;
   final double percent;
 
-  const ScoreBar({super.key, required this.label, required this.percent});
+  ScoreBar({super.key, required this.label, required this.percent});
 
   Color get _color {
     if (percent >= 80) return AppTheme.success;
@@ -117,14 +117,14 @@ class ScoreBar extends StatelessWidget {
                     fontWeight: FontWeight.w600)),
           ],
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6),
         ClipRRect(
           borderRadius: BorderRadius.circular(100),
           child: TweenAnimationBuilder<double>(
             tween: Tween(begin: 0, end: percent / 100),
-            duration: const Duration(milliseconds: 600),
+            duration: Duration(milliseconds: 600),
             curve: Curves.easeOut,
-            builder: (_, val, __) => LinearProgressIndicator(
+            builder: (_, val, _) => LinearProgressIndicator(
               value: val,
               backgroundColor: AppTheme.borderLight,
               valueColor: AlwaysStoppedAnimation(_color),
@@ -141,7 +141,7 @@ class ScoreBar extends StatelessWidget {
 
 class GradeBadge extends StatelessWidget {
   final String grade;
-  const GradeBadge({super.key, required this.grade});
+  GradeBadge({super.key, required this.grade});
 
   Color get _color {
     switch (grade) {
@@ -154,7 +154,7 @@ class GradeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: _color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
@@ -171,13 +171,13 @@ class GradeBadge extends StatelessWidget {
 
 class CefrBadge extends StatelessWidget {
   final String level;
-  const CefrBadge({super.key, required this.level});
+  CefrBadge({super.key, required this.level});
 
   Color get _color {
     switch (level) {
       case 'A1': return AppTheme.danger;
       case 'A2': return AppTheme.warning;
-      case 'B1': return const Color(0xFF3B82F6);
+      case 'B1': return Color(0xFF3B82F6);
       default:   return AppTheme.success;
     }
   }
@@ -185,7 +185,7 @@ class CefrBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: _color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
@@ -208,7 +208,7 @@ class StyledDropdown<T> extends StatelessWidget {
   final String? hint;
   final IconData? icon;
 
-  const StyledDropdown({
+  StyledDropdown({
     super.key,
     required this.label,
     required this.value,
@@ -228,10 +228,10 @@ class StyledDropdown<T> extends StatelessWidget {
                 color: AppTheme.textSecondary,
                 fontSize: 13,
                 fontWeight: FontWeight.w500)),
-        const SizedBox(height: 6),
+        SizedBox(height: 6),
         DropdownButtonFormField<T>(
           key: ValueKey(value),
-          value: value,
+          initialValue: value,
           items: items,
           onChanged: onChanged,
           hint: hint != null
@@ -249,19 +249,19 @@ class StyledDropdown<T> extends StatelessWidget {
             fillColor: AppTheme.surface,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: AppTheme.border),
+              borderSide: BorderSide(color: AppTheme.border),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: AppTheme.border),
+              borderSide: BorderSide(color: AppTheme.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide:
-                  const BorderSide(color: AppTheme.accent, width: 1.5),
+                  BorderSide(color: AppTheme.accent, width: 1.5),
             ),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
         ),
       ],
@@ -276,7 +276,7 @@ class SectionHeader extends StatelessWidget {
   final String? subtitle;
   final Widget? trailing;
 
-  const SectionHeader({
+  SectionHeader({
     super.key,
     required this.title,
     this.subtitle,
@@ -296,14 +296,14 @@ class SectionHeader extends StatelessWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.w600)),
             if (subtitle != null) ...[
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(subtitle!,
                   style: GoogleFonts.nunito(
                       color: AppTheme.textMuted, fontSize: 12)),
             ],
           ],
         ),
-        const Spacer(),
+        Spacer(),
         if (trailing != null) trailing!,
       ],
     );
@@ -317,7 +317,7 @@ class LightCard extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onTap;
 
-  const LightCard({
+  LightCard({
     super.key,
     required this.child,
     this.padding,
@@ -327,7 +327,7 @@ class LightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final inner = Container(
-      padding: padding ?? const EdgeInsets.all(20),
+      padding: padding ?? EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppTheme.card,
         borderRadius: BorderRadius.circular(24),
@@ -352,16 +352,16 @@ class LightCard extends StatelessWidget {
 class StatusBadge extends StatelessWidget {
   final bool done;
 
-  const StatusBadge({super.key, required this.done});
+  StatusBadge({super.key, required this.done});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: done
             ? AppTheme.success.withValues(alpha: 0.1)
-            : const Color(0xFF6B7280).withValues(alpha: 0.08),
+            : Color(0xFF6B7280).withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
@@ -389,8 +389,9 @@ class StyledTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final List<TextInputFormatter>? inputFormatters;
+  final int maxLines;
 
-  const StyledTextField({
+  StyledTextField({
     super.key,
     required this.label,
     required this.controller,
@@ -402,6 +403,7 @@ class StyledTextField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.inputFormatters,
+    this.maxLines = 1,
   });
 
   @override
@@ -422,13 +424,14 @@ class StyledTextField extends StatelessWidget {
                       color: AppTheme.danger, fontSize: 13)),
           ],
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6),
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
           readOnly: readOnly,
           onTap: onTap,
           inputFormatters: inputFormatters,
+          maxLines: maxLines,
           style: GoogleFonts.nunito(color: AppTheme.textPrimary, fontSize: 14),
           validator: validator ??
               (required
@@ -443,22 +446,24 @@ class StyledTextField extends StatelessWidget {
             fillColor: AppTheme.surface,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: AppTheme.border),
+              borderSide: BorderSide(color: AppTheme.border),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: AppTheme.border),
+              borderSide: BorderSide(color: AppTheme.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide:
-                  const BorderSide(color: AppTheme.accent, width: 1.5),
+                  BorderSide(color: AppTheme.accent, width: 1.5),
             ),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
         ),
       ],
     );
   }
 }
+
+

@@ -3,14 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/models.dart';
 import '../../services/data_service.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/shared_widgets.dart';
 import '../../widgets/student_profile_dialog.dart';
-import 'cc_dashboard.dart'; // To reuse the empty state and row designs
+// To reuse the empty state and row designs
 
 class CCFilteredStudentsScreen extends StatefulWidget {
   final bool isPassed;
 
-  const CCFilteredStudentsScreen({super.key, required this.isPassed});
+  CCFilteredStudentsScreen({super.key, required this.isPassed});
 
   @override
   State<CCFilteredStudentsScreen> createState() =>
@@ -41,28 +40,28 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: DataService.notifier,
-      builder: (context, _, __) {
+      builder: (context, _, _) {
         final list = _filteredStudents;
         final String title = widget.isPassed ? 'Passed Students' : 'Failed Students';
         final IconData icon = widget.isPassed ? Icons.check_circle_outline : Icons.cancel_outlined;
         final Color color = widget.isPassed ? AppTheme.success : AppTheme.danger;
 
         return Padding(
-          padding: const EdgeInsets.all(32),
+          padding: EdgeInsets.all(32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: color.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Icon(icon, color: color, size: 22),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -83,7 +82,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                       ),
                     ],
                   ),
-                  const Spacer(),
+                  Spacer(),
                   // Local Search Input
                   Container(
                     width: 240,
@@ -93,12 +92,12 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                       borderRadius: BorderRadius.circular(22),
                       border: Border.all(color: AppTheme.border),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       children: [
-                        const Icon(Icons.search,
+                        Icon(Icons.search,
                             color: AppTheme.textMuted, size: 18),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12),
                         Expanded(
                           child: TextField(
                             onChanged: (v) => setState(() => _searchQuery = v),
@@ -113,7 +112,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                               focusedBorder: InputBorder.none,
                               hoverColor: Colors.transparent,
                               contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 13),
+                                  EdgeInsets.symmetric(vertical: 13),
                               isDense: true,
                             ),
                           ),
@@ -123,7 +122,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               Expanded(
                 child: list.isEmpty
                     ? Center(
@@ -131,7 +130,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(icon, color: AppTheme.textMuted, size: 56),
-                            const SizedBox(height: 16),
+                            SizedBox(height: 16),
                             Text('No students found',
                                 style: GoogleFonts.nunito(
                                     color: AppTheme.textMuted, fontSize: 16)),
@@ -150,7 +149,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                             Expanded(
                               child: ListView.separated(
                                 itemCount: list.length,
-                                separatorBuilder: (_, __) => const Divider(
+                                separatorBuilder: (_, _) => Divider(
                                 height: 1, color: AppTheme.border),
                             itemBuilder: (ctx, i) => _studentRow(list[i]),
                           ),
@@ -168,11 +167,11 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
 
   Widget _tableHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
         color: AppTheme.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-        border: const Border(bottom: BorderSide(color: AppTheme.border)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        border: Border(bottom: BorderSide(color: AppTheme.border)),
       ),
       child: Row(
         children: [
@@ -180,7 +179,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
           Expanded(flex: 2, child: _colHeader('Contact')),
           Expanded(flex: 2, child: _colHeader('Grade/Lang')),
           Expanded(flex: 2, child: _colHeader('Exam Info')),
-          const SizedBox(width: 80), // Actions
+          SizedBox(width: 80), // Actions
         ],
       ),
     );
@@ -209,7 +208,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Row(
           children: [
             // Name
@@ -234,7 +233,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,7 +277,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                 children: [
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppTheme.accent.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(6),
@@ -289,7 +288,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                             fontSize: 11,
                             fontWeight: FontWeight.w700)),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Text(s.language.substring(0, 2).toUpperCase(),
                       style: GoogleFonts.nunito(
                           color: AppTheme.textSecondary,
@@ -321,7 +320,7 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  icon: const Icon(Icons.chevron_right_rounded,
+                  icon: Icon(Icons.chevron_right_rounded,
                       color: AppTheme.textMuted),
                   onPressed: () {
                     showDialog(
@@ -339,3 +338,5 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
     );
   }
 }
+
+

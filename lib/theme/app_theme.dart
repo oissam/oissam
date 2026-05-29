@@ -1,118 +1,125 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Pre-cached text styles — call GoogleFonts once, reuse everywhere.
-/// This avoids expensive font lookups on every widget rebuild.
 class AppTextStyle {
   AppTextStyle._();
 
   // ── Headings ──────────────────────────────────────────────────────────
-  static final TextStyle heading1 = GoogleFonts.nunito(
+  static TextStyle get heading1 => GoogleFonts.nunito(
     color: AppTheme.textPrimary, fontSize: 24, fontWeight: FontWeight.w800,
   );
-  static final TextStyle heading2 = GoogleFonts.nunito(
+  static TextStyle get heading2 => GoogleFonts.nunito(
     color: AppTheme.textPrimary, fontSize: 22, fontWeight: FontWeight.w700,
   );
-  static final TextStyle heading3 = GoogleFonts.nunito(
+  static TextStyle get heading3 => GoogleFonts.nunito(
     color: AppTheme.textPrimary, fontSize: 18, fontWeight: FontWeight.w700,
   );
 
   // ── Body ──────────────────────────────────────────────────────────────
-  static final TextStyle body = GoogleFonts.nunito(
+  static TextStyle get body => GoogleFonts.nunito(
     color: AppTheme.textPrimary, fontSize: 14, fontWeight: FontWeight.w500,
   );
-  static final TextStyle bodySecondary = GoogleFonts.nunito(
+  static TextStyle get bodySecondary => GoogleFonts.nunito(
     color: AppTheme.textSecondary, fontSize: 13,
   );
-  static final TextStyle bodyBold = GoogleFonts.nunito(
+  static TextStyle get bodyBold => GoogleFonts.nunito(
     color: AppTheme.textPrimary, fontSize: 14, fontWeight: FontWeight.w700,
   );
 
   // ── Labels & Captions ─────────────────────────────────────────────────
-  static final TextStyle label = GoogleFonts.nunito(
+  static TextStyle get label => GoogleFonts.nunito(
     color: AppTheme.textMuted, fontSize: 12, fontWeight: FontWeight.w600,
   );
-  static final TextStyle caption = GoogleFonts.nunito(
+  static TextStyle get caption => GoogleFonts.nunito(
     color: AppTheme.textMuted, fontSize: 11,
   );
-  static final TextStyle subtitle = GoogleFonts.nunito(
+  static TextStyle get subtitle => GoogleFonts.nunito(
     color: AppTheme.textSecondary, fontSize: 13,
   );
 
   // ── Special ───────────────────────────────────────────────────────────
-  static final TextStyle navLabel = GoogleFonts.nunito(
+  static TextStyle get navLabel => GoogleFonts.nunito(
     color: AppTheme.textPrimary, fontSize: 15, fontWeight: FontWeight.w600,
   );
-  static final TextStyle navLabelActive = GoogleFonts.nunito(
+  static TextStyle get navLabelActive => GoogleFonts.nunito(
     color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700,
   );
-  static final TextStyle sidebarTitle = GoogleFonts.nunito(
+  static TextStyle get sidebarTitle => GoogleFonts.nunito(
     color: AppTheme.textPrimary, fontSize: 20, fontWeight: FontWeight.w800,
   );
-  static final TextStyle tableHeader = GoogleFonts.nunito(
+  static TextStyle get tableHeader => GoogleFonts.nunito(
     color: AppTheme.textMuted, fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.5,
   );
-  static final TextStyle tableCell = GoogleFonts.nunito(
+  static TextStyle get tableCell => GoogleFonts.nunito(
     color: AppTheme.textSecondary, fontSize: 13,
   );
-  static final TextStyle accent = GoogleFonts.nunito(
+  static TextStyle get accent => GoogleFonts.nunito(
     color: AppTheme.accent, fontSize: 14, fontWeight: FontWeight.w600,
   );
-  static final TextStyle success = GoogleFonts.nunito(
+  static TextStyle get success => GoogleFonts.nunito(
     color: AppTheme.success, fontSize: 13,
   );
-  static final TextStyle warning = GoogleFonts.nunito(
+  static TextStyle get warning => GoogleFonts.nunito(
     color: AppTheme.warning, fontSize: 13,
   );
-  static final TextStyle filterLabel = GoogleFonts.nunito(
+  static TextStyle get filterLabel => GoogleFonts.nunito(
     color: AppTheme.textSecondary, fontSize: 13,
   );
-  static final TextStyle filterLabelActive = GoogleFonts.nunito(
+  static TextStyle get filterLabelActive => GoogleFonts.nunito(
     color: AppTheme.accent, fontSize: 13, fontWeight: FontWeight.w600,
   );
 }
 
 class AppTheme {
-  // ── Color Palette (Minimalist Light Theme) ──────────────────────────────
-  static const Color background  = Color(0xFFE5E7EB); // Soft light grey background
-  static const Color surface     = Color(0xFFFFFFFF);
-  static const Color card        = Color(0xFFFFFFFF);
-  static const Color cardHover   = Color(0xFFF9FAFB);
-  static const Color sidebarBg   = Color(0xFFFFFFFF);
+  // Global theme state
+  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
-  static const Color textPrimary   = Color(0xFF000000); // Sharp black for headers
-  static const Color textSecondary = Color(0xFF4B5563);
-  static const Color textMuted     = Color(0xFF9CA3AF);
+  static bool get isDark => themeNotifier.value == ThemeMode.dark;
 
-  static const Color border      = Color(0xFFE5E7EB);
-  static const Color borderLight = Color(0xFFF3F4F6);
+  // ── Color Palette ──────────────────────────────
+  static Color get background  => isDark ? Color(0xFF111111) : Color(0xFFE5E7EB);
+  static Color get surface     => isDark ? Color(0xFF1F2937) : Color(0xFFFFFFFF);
+  static Color get card        => isDark ? Color(0xFF1F2937) : Color(0xFFFFFFFF);
+  static Color get cardHover   => isDark ? Color(0xFF374151) : Color(0xFFF9FAFB);
+  static Color get sidebarBg   => isDark ? Color(0xFF1F2937) : Color(0xFFFFFFFF);
 
-  // Accent (black)
-  static const Color accent      = Color(0xFF111111);
-  static const Color accentLight = Color(0xFF374151);
+  static Color get textPrimary   => isDark ? Color(0xFFF9FAFB) : Color(0xFF000000);
+  static Color get textSecondary => isDark ? Color(0xFFD1D5DB) : Color(0xFF4B5563);
+  static Color get textMuted     => isDark ? Color(0xFF9CA3AF) : Color(0xFF9CA3AF);
+
+  static Color get border      => isDark ? Color(0xFF374151) : Color(0xFFE5E7EB);
+  static Color get borderLight => isDark ? Color(0xFF4B5563) : Color(0xFFF3F4F6);
+
+  // Accent
+  static Color get accent      => isDark ? Color(0xFFFFFFFF) : Color(0xFF111111);
+  static Color get accentLight => isDark ? Color(0xFFD1D5DB) : Color(0xFF374151);
 
   // Role colors
-  static const Color callCenterColor  = Color(0xFF111111);
-  static const Color examinatorColor  = Color(0xFF374151);
+  static Color get callCenterColor  => isDark ? Color(0xFFFFFFFF) : Color(0xFF111111);
+  static Color get examinatorColor  => isDark ? Color(0xFFD1D5DB) : Color(0xFF374151);
 
   // Status colors
-  static const Color success = Color(0xFF10B981);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color danger  = Color(0xFFEF4444);
+  static Color success = Color(0xFF10B981);
+  static Color warning = Color(0xFFF59E0B);
+  static Color danger  = Color(0xFFEF4444);
 
   // Dark hero card
-  static const Color heroCard     = Color(0xFF111111);
-  static const Color heroCardText = Color(0xFFFFFFFF);
+  static Color get heroCard     => isDark ? Color(0xFF222222) : Color(0xFF111111);
+  static Color get heroCardText => Color(0xFFFFFFFF);
 
   // ── Gradients ─────────────────────────────────────────────────────────────
-  static const LinearGradient heroGradient = LinearGradient(
-    colors: [Color(0xFF222222), Color(0xFF111111)],
+  static LinearGradient get heroGradient => LinearGradient(
+    colors: isDark 
+        ? [Color(0xFF374151), Color(0xFF111111)]
+        : [Color(0xFF222222), Color(0xFF111111)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
-  static const LinearGradient accentGradient = LinearGradient(
-    colors: [Color(0xFF374151), Color(0xFF111111)],
+  static LinearGradient get accentGradient => LinearGradient(
+    colors: isDark
+        ? [Color(0xFF4B5563), Color(0xFF1F2937)]
+        : [Color(0xFF374151), Color(0xFF111111)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
@@ -120,38 +127,63 @@ class AppTheme {
   // ── Shadows ───────────────────────────────────────────────────────────────
   static List<BoxShadow> get cardShadow => [
     BoxShadow(
-      color: const Color(0xFF000000).withValues(alpha: 0.02),
+      color: Color(0xFF000000).withValues(alpha: isDark ? 0.3 : 0.02),
       blurRadius: 24,
-      offset: const Offset(0, 8),
+      offset: Offset(0, 8),
     ),
   ];
 
   static List<BoxShadow> get smallShadow => [
     BoxShadow(
-      color: const Color(0xFF000000).withValues(alpha: 0.02),
+      color: Color(0xFF000000).withValues(alpha: isDark ? 0.2 : 0.02),
       blurRadius: 10,
-      offset: const Offset(0, 4),
+      offset: Offset(0, 4),
     ),
   ];
 
   // ── Theme ─────────────────────────────────────────────────────────────────
   static ThemeData get theme {
+    return _buildThemeData(Brightness.light);
+  }
+
+  static ThemeData get darkTheme {
+    return _buildThemeData(Brightness.dark);
+  }
+
+  static ThemeData _buildThemeData(Brightness brightness) {
+    // Determine context manually for theme generation so it reflects properly when nested
+    final isDarkContext = brightness == Brightness.dark;
+    final currentBackground = isDarkContext ? Color(0xFF111111) : Color(0xFFE5E7EB);
+    final currentSurface = isDarkContext ? Color(0xFF1F2937) : Color(0xFFFFFFFF);
+    final currentAccent = isDarkContext ? Color(0xFFFFFFFF) : Color(0xFF111111);
+    final currentTextPrimary = isDarkContext ? Color(0xFFF9FAFB) : Color(0xFF000000);
+    final currentTextMuted = isDarkContext ? Color(0xFF9CA3AF) : Color(0xFF9CA3AF);
+    final currentBorder = isDarkContext ? Color(0xFF374151) : Color(0xFFE5E7EB);
+    final currentBorderLight = isDarkContext ? Color(0xFF4B5563) : Color(0xFFF3F4F6);
+
     return ThemeData(
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: background,
-      colorScheme: const ColorScheme.light(
-        primary: accent,
-        surface: card,
+      brightness: brightness,
+      scaffoldBackgroundColor: currentBackground,
+      colorScheme: ColorScheme(
+        brightness: brightness,
+        primary: currentAccent,
+        onPrimary: isDarkContext ? Colors.black : Colors.white,
+        secondary: currentAccent,
+        onSecondary: isDarkContext ? Colors.black : Colors.white,
+        error: danger,
+        onError: Colors.white,
+        surface: currentSurface,
+        onSurface: currentTextPrimary,
       ),
       textTheme: GoogleFonts.nunitoTextTheme(),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: accent,
-          foregroundColor: Colors.white,
+          backgroundColor: currentAccent,
+          foregroundColor: isDarkContext ? Colors.black : Colors.white,
           elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24), // Heavy pill rounding
+            borderRadius: BorderRadius.circular(24),
           ),
           textStyle: GoogleFonts.nunito(
             fontWeight: FontWeight.w700,
@@ -161,9 +193,9 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: textPrimary,
-          side: const BorderSide(color: border),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          foregroundColor: currentTextPrimary,
+          side: BorderSide(color: currentBorder),
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
@@ -175,26 +207,28 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: surface,
-        hintStyle: GoogleFonts.nunito(color: textMuted, fontSize: 14),
+        fillColor: currentSurface,
+        hintStyle: GoogleFonts.nunito(color: currentTextMuted, fontSize: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: border),
+          borderSide: BorderSide(color: currentBorder),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: borderLight),
+          borderSide: BorderSide(color: currentBorderLight),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: accent, width: 1.5),
+          borderSide: BorderSide(color: currentAccent, width: 1.5),
         ),
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
         ),
       ),
-      dividerColor: border,
+      dividerColor: currentBorder,
     );
   }
 }
+
+

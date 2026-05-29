@@ -8,7 +8,7 @@ class StudentProfileDialog extends StatelessWidget {
   final Student student;
   final ExamResult? result;
 
-  const StudentProfileDialog({super.key, required this.student, this.result});
+  StudentProfileDialog({super.key, required this.student, this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class StudentProfileDialog extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withOpacity(0.5),
               blurRadius: 40,
-              offset: const Offset(0, 20),
+              offset: Offset(0, 20),
             ),
           ],
         ),
@@ -33,7 +33,7 @@ class StudentProfileDialog extends StatelessWidget {
           children: [
             // Header
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -43,7 +43,7 @@ class StudentProfileDialog extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(24),
                   topRight: Radius.circular(24),
                 ),
@@ -69,7 +69,7 @@ class StudentProfileDialog extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,17 +82,17 @@ class StudentProfileDialog extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Row(
                           children: [
                             _tag(
                               'Grade ${student.studentClass}',
                               AppTheme.accent,
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             _tag(student.language, AppTheme.callCenterColor),
                             if (result != null && result!.isPassed != null) ...[
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               _tag(
                                 result!.isPassed! ? 'PASSED' : 'FAILED',
                                 result!.isPassed! ? AppTheme.success : AppTheme.danger,
@@ -105,7 +105,7 @@ class StudentProfileDialog extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close, color: AppTheme.textMuted),
+                    icon: Icon(Icons.close, color: AppTheme.textMuted),
                   ),
                 ],
               ),
@@ -115,7 +115,7 @@ class StudentProfileDialog extends StatelessWidget {
             Flexible(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(24),
                   child: Column(
                     children: [
                       // Contact info
@@ -132,7 +132,7 @@ class StudentProfileDialog extends StatelessWidget {
                             Icons.phone_rounded,
                           ),
                       ]),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Exam info
                       _section('Exam Schedule', Icons.calendar_month_rounded, [
@@ -154,12 +154,12 @@ class StudentProfileDialog extends StatelessWidget {
                       ]),
 
                       if (student.commentary != null && student.commentary!.isNotEmpty) ...[
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         _section('Call Center Commentary', Icons.notes_rounded, [
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.all(12),
+                            padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: AppTheme.surface,
                               borderRadius: BorderRadius.circular(12),
@@ -179,16 +179,16 @@ class StudentProfileDialog extends StatelessWidget {
 
                       // Results (if available)
                       if (result != null) ...[
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         _section('Exam Results', Icons.analytics_rounded, [
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           ScoreBar(label: 'Math', percent: result!.mathPercent),
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10),
                           ScoreBar(
                             label: 'English',
                             percent: result!.englishPercent,
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -203,10 +203,10 @@ class StudentProfileDialog extends StatelessWidget {
                             ],
                           ),
                           if (result!.essayText != null && result!.essayText!.isNotEmpty) ...[
-                            const SizedBox(height: 16),
+                            SizedBox(height: 16),
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 color: AppTheme.surface,
                                 borderRadius: BorderRadius.circular(16),
@@ -217,8 +217,8 @@ class StudentProfileDialog extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      const Icon(Icons.notes_rounded, color: AppTheme.textMuted, size: 16),
-                                      const SizedBox(width: 6),
+                                      Icon(Icons.notes_rounded, color: AppTheme.textMuted, size: 16),
+                                      SizedBox(width: 6),
                                       Text('Student Essay',
                                           style: GoogleFonts.nunito(
                                               color: AppTheme.textSecondary,
@@ -226,7 +226,7 @@ class StudentProfileDialog extends StatelessWidget {
                                               fontWeight: FontWeight.w600)),
                                     ],
                                   ),
-                                  const SizedBox(height: 8),
+                                  SizedBox(height: 8),
                                   Text(
                                     result!.essayText!,
                                     style: GoogleFonts.nunito(
@@ -240,10 +240,10 @@ class StudentProfileDialog extends StatelessWidget {
                             ),
                           ],
                           if (result!.commentary != null && result!.commentary!.isNotEmpty) ...[
-                            const SizedBox(height: 16),
+                            SizedBox(height: 16),
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 color: AppTheme.surface,
                                 borderRadius: BorderRadius.circular(16),
@@ -254,8 +254,8 @@ class StudentProfileDialog extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      const Icon(Icons.comment_rounded, color: AppTheme.textMuted, size: 16),
-                                      const SizedBox(width: 6),
+                                      Icon(Icons.comment_rounded, color: AppTheme.textMuted, size: 16),
+                                      SizedBox(width: 6),
                                       Text('Examinator Commentary',
                                           style: GoogleFonts.nunito(
                                               color: AppTheme.textSecondary,
@@ -263,7 +263,7 @@ class StudentProfileDialog extends StatelessWidget {
                                               fontWeight: FontWeight.w600)),
                                     ],
                                   ),
-                                  const SizedBox(height: 8),
+                                  SizedBox(height: 8),
                                   Text(
                                     result!.commentary!,
                                     style: GoogleFonts.nunito(
@@ -276,7 +276,7 @@ class StudentProfileDialog extends StatelessWidget {
                               ),
                             ),
                           ],
-                          const Divider(color: AppTheme.border, height: 24),
+                          Divider(color: AppTheme.border, height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -298,7 +298,7 @@ class StudentProfileDialog extends StatelessWidget {
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8),
                                   GradeBadge(grade: result!.grade),
                                 ],
                               ),
@@ -306,9 +306,9 @@ class StudentProfileDialog extends StatelessWidget {
                           ),
                         ]),
                       ] else ...[
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         Container(
-                          padding: const EdgeInsets.all(16),
+                          padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: AppTheme.surface,
                             borderRadius: BorderRadius.circular(24),
@@ -316,12 +316,12 @@ class StudentProfileDialog extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.hourglass_empty,
                                 color: AppTheme.textMuted,
                                 size: 18,
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
                               Text(
                                 'Results not yet available',
                                 style: GoogleFonts.nunito(
@@ -346,7 +346,7 @@ class StudentProfileDialog extends StatelessWidget {
 
   Widget _tag(String text, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: color.withOpacity(0.15),
         borderRadius: BorderRadius.circular(6),
@@ -364,7 +364,7 @@ class StudentProfileDialog extends StatelessWidget {
 
   Widget _section(String title, IconData icon, List<Widget> children) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius: BorderRadius.circular(24),
@@ -376,7 +376,7 @@ class StudentProfileDialog extends StatelessWidget {
           Row(
             children: [
               Icon(icon, color: AppTheme.accent, size: 16),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 title,
                 style: GoogleFonts.nunito(
@@ -387,7 +387,7 @@ class StudentProfileDialog extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           ...children,
         ],
       ),
@@ -396,11 +396,11 @@ class StudentProfileDialog extends StatelessWidget {
 
   Widget _infoRow(String label, String value, IconData icon) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
           Icon(icon, color: AppTheme.textMuted, size: 14),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Text(
             '$label: ',
             style: GoogleFonts.nunito(
@@ -421,3 +421,4 @@ class StudentProfileDialog extends StatelessWidget {
     );
   }
 }
+

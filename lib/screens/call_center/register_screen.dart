@@ -9,7 +9,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class RegisterStudentScreen extends StatefulWidget {
   final VoidCallback? onSaved;
-  const RegisterStudentScreen({super.key, this.onSaved});
+  RegisterStudentScreen({super.key, this.onSaved});
 
   @override
   State<RegisterStudentScreen> createState() => _RegisterStudentScreenState();
@@ -54,7 +54,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
         _selectedTime == null ||
         _selectedRoom == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Please fill all required fields'),
           backgroundColor: AppTheme.danger,
         ),
@@ -64,7 +64,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
 
     setState(() => _isSaving = true);
     final student = Student(
-      id: const Uuid().v4(),
+      id: Uuid().v4(),
       firstName: _firstNameCtrl.text.trim(),
       lastName: _lastNameCtrl.text.trim(),
       studentClass: _selectedClass!,
@@ -85,8 +85,8 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.check_circle, color: Colors.white),
-              const SizedBox(width: 8),
+              Icon(Icons.check_circle, color: Colors.white),
+              SizedBox(width: 8),
               Text('${student.fullName} registered successfully!'),
             ],
           ),
@@ -117,14 +117,14 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: DataService.notifier,
-      builder: (context, _, __) {
+      builder: (context, _, _) {
         final dates = DataService.getRegisterableDates();
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: EdgeInsets.all(32),
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 600),
+              constraints: BoxConstraints(maxWidth: 600),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -134,18 +134,18 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: AppTheme.accent,
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.person_add_rounded,
                             color: Colors.white,
                             size: 22,
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -168,11 +168,11 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: 32),
 
                 // Section: Personal Info
                 _sectionHeader('Personal Information', Icons.person_outline),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 _card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -183,14 +183,14 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         hint: 'e.g. Amir',
                         icon: Icons.badge_outlined,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       StyledTextField(
                         label: 'Last Name',
                         controller: _lastNameCtrl,
                         hint: 'e.g. Karimov',
                         icon: Icons.badge_outlined,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       StyledDropdown<String>(
                         label: 'Grade',
                         value: _selectedClass,
@@ -206,7 +206,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                             .toList(),
                         onChanged: (v) => setState(() => _selectedClass = v),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       StyledDropdown<String>(
                         label: 'Language',
                         value: _selectedLanguage,
@@ -223,11 +223,11 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // Section: Contact
                 _sectionHeader('Contact Information', Icons.phone_outlined),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 _card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -249,7 +249,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       StyledTextField(
                         label: 'Phone Number 2',
                         controller: _phone2Ctrl,
@@ -265,7 +265,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       StyledTextField(
                         label: 'Commentary (Optional)',
                         controller: _commentaryCtrl,
@@ -278,11 +278,11 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // Section: Exam Schedule
                 _sectionHeader('Exam Schedule', Icons.calendar_month_rounded),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 _card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -302,7 +302,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           _selectedTime = null;
                         }),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       StyledDropdown<String>(
                         label: 'Exam Time',
                         value: _selectedTime,
@@ -315,7 +315,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                             .toList(),
                         onChanged: (v) => setState(() => _selectedTime = v),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       StyledDropdown<String>(
                         label: 'Room',
                         value: _selectedRoom,
@@ -332,19 +332,19 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 32),
+                SizedBox(height: 32),
 
                 // Action buttons
                 Row(
                   children: [
                     OutlinedButton.icon(
                       onPressed: _clearForm,
-                      icon: const Icon(Icons.refresh, size: 18),
-                      label: const Text('Clear Form'),
+                      icon: Icon(Icons.refresh, size: 18),
+                      label: Text('Clear Form'),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppTheme.textSecondary,
-                        side: const BorderSide(color: AppTheme.border),
-                        padding: const EdgeInsets.symmetric(
+                        side: BorderSide(color: AppTheme.border),
+                        padding: EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 14,
                         ),
@@ -353,11 +353,11 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     ElevatedButton.icon(
                       onPressed: _isSaving ? null : _save,
                       icon: _isSaving
-                          ? const SizedBox(
+                          ? SizedBox(
                               height: 16,
                               width: 16,
                               child: CircularProgressIndicator(
@@ -365,10 +365,10 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 color: Colors.white,
                               ),
                             )
-                          : const Icon(Icons.save_rounded, size: 18),
+                          : Icon(Icons.save_rounded, size: 18),
                       label: Text(_isSaving ? 'Saving...' : 'Register Student'),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 28,
                           vertical: 14,
                         ),
@@ -392,7 +392,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     return Row(
       children: [
         Icon(icon, color: AppTheme.accent, size: 18),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         Text(
           title,
           style: GoogleFonts.nunito(
@@ -407,7 +407,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
 
   Widget _card({required Widget child}) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: AppTheme.card,
         borderRadius: BorderRadius.circular(16),
@@ -417,3 +417,5 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     );
   }
 }
+
+

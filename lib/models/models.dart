@@ -133,3 +133,5 @@ class ExamResult {
         enteredAt: DateTime.parse(json['entered_at'] ?? json['enteredAt']),
       );
 }
+
+

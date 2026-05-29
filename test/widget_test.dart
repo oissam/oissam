@@ -3,8 +3,8 @@ import 'package:internal_exam_planner/main.dart';
 
 void main() {
   testWidgets('App smoke test', (WidgetTester tester) async {
-    // App builds without errors
-    await tester.pumpWidget(const InternalExamPlannerApp());
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(InternalExamPlannerApp());
     expect(find.byType(InternalExamPlannerApp), findsOneWidget);
   });
 }

@@ -7,7 +7,7 @@ import '../../widgets/shared_widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ManageScheduleScreen extends StatefulWidget {
-  const ManageScheduleScreen({super.key});
+  ManageScheduleScreen({super.key});
 
   @override
   State<ManageScheduleScreen> createState() => _ManageScheduleScreenState();
@@ -85,7 +85,7 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
     if (!regex.hasMatch(time)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid time format. Use HH:MM')),
+          SnackBar(content: Text('Invalid time format. Use HH:MM')),
         );
       }
       return;
@@ -116,7 +116,7 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(32),
+      padding: EdgeInsets.all(32),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,18 +129,18 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: AppTheme.examinatorColor.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: const HugeIcon(
+                      child: HugeIcon(
                         icon: HugeIcons.strokeRoundedCalendar01,
                         color: AppTheme.examinatorColor,
                         size: 22,
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -156,9 +156,9 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: AppTheme.card,
                     borderRadius: BorderRadius.circular(24),
@@ -180,7 +180,7 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                       final ds = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
                       return DataService.getTimesForDate(ds).isNotEmpty ? ['exam'] : [];
                     },
-                    calendarStyle: const CalendarStyle(
+                    calendarStyle: CalendarStyle(
                       markerDecoration: BoxDecoration(
                         color: AppTheme.examinatorColor,
                         shape: BoxShape.circle,
@@ -194,7 +194,7 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    headerStyle: const HeaderStyle(
+                    headerStyle: HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true,
                     ),
@@ -203,12 +203,12 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
               ],
             ),
           ),
-          const SizedBox(width: 32),
+          SizedBox(width: 32),
           // Right side: Times for selected date
           Expanded(
             flex: 1,
             child: Container(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: AppTheme.card,
                 borderRadius: BorderRadius.circular(24),
@@ -222,7 +222,7 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                           color: AppTheme.textPrimary,
                           fontSize: 18,
                           fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   // Add time input
                   Row(
                     children: [
@@ -236,19 +236,19 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                           onTap: _pickTime,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Padding(
-                        padding: const EdgeInsets.only(top: 24.0),
+                        padding: EdgeInsets.only(top: 24.0),
                         child: IconButton(
                           onPressed: _addTime,
-                          icon: const Icon(Icons.add_circle),
+                          icon: Icon(Icons.add_circle),
                           color: AppTheme.accent,
                           iconSize: 32,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                   if (_times.isEmpty)
                     Center(
                       child: Text('No times scheduled.',
@@ -259,10 +259,10 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                     Expanded(
                       child: ListView.separated(
                         itemCount: _times.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 12),
+                        separatorBuilder: (_, _) => SizedBox(height: 12),
                         itemBuilder: (context, i) {
                           return Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 12),
                             decoration: BoxDecoration(
                               color: AppTheme.surface,
@@ -271,17 +271,17 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.access_time_filled,
+                                Icon(Icons.access_time_filled,
                                     color: AppTheme.accent, size: 20),
-                                const SizedBox(width: 12),
+                                SizedBox(width: 12),
                                 Text(_times[i],
                                     style: GoogleFonts.nunito(
                                         color: AppTheme.textPrimary,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600)),
-                                const Spacer(),
+                                Spacer(),
                                 IconButton(
-                                  icon: const Icon(Icons.delete_outline,
+                                  icon: Icon(Icons.delete_outline,
                                       color: AppTheme.danger, size: 20),
                                   onPressed: () => _removeTime(_times[i]),
                                 ),
@@ -300,3 +300,5 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
     );
   }
 }
+
+

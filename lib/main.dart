@@ -11,7 +11,7 @@ void main() async {
   await Supabase.initialize(
     url: 'https://suxiiyszutxrhbhwrjjw.supabase.co',
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1eGlpeXN6dXR4cmhiaHdyamp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMTMwMzYsImV4cCI6MjA5NTU4OTAzNn0.aud6oGlo0ArTdQfCGOyKltwsPftR0d2TQ2zLpdxQ3MU',
-    realtimeClientOptions: const RealtimeClientOptions(
+    realtimeClientOptions: RealtimeClientOptions(
       logLevel: RealtimeLogLevel.info,
       eventsPerSecond: 10,
     ),
@@ -20,11 +20,11 @@ void main() async {
   // Init streams — this awaits the first data batch from each table
   await DataService.init();
 
-  runApp(const InternalExamPlannerApp());
+  runApp(InternalExamPlannerApp());
 }
 
 class InternalExamPlannerApp extends StatefulWidget {
-  const InternalExamPlannerApp({super.key});
+  InternalExamPlannerApp({super.key});
 
   @override
   State<InternalExamPlannerApp> createState() =>
@@ -44,11 +44,18 @@ class _InternalExamPlannerAppState extends State<InternalExamPlannerApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Internal Exam Planner',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.theme,
-      home: _buildHome(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: AppTheme.themeNotifier,
+      builder: (context, themeMode, _) {
+        return MaterialApp(
+          title: 'Internal Exam Planner',
+          debugShowCheckedModeBanner: false,
+          themeMode: themeMode,
+          theme: AppTheme.theme,
+          darkTheme: AppTheme.darkTheme,
+          home: _buildHome(),
+        );
+      },
     );
   }
 
@@ -62,3 +69,5 @@ class _InternalExamPlannerAppState extends State<InternalExamPlannerApp> {
     return ExaminatorShell(onLogout: _handleLogout);
   }
 }
+
+

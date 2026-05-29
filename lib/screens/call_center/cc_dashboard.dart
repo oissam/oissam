@@ -10,7 +10,7 @@ import '../../widgets/student_profile_dialog.dart';
 
 class CallCenterDashboard extends StatefulWidget {
   final VoidCallback? onRefresh;
-  const CallCenterDashboard({super.key, this.onRefresh});
+  CallCenterDashboard({super.key, this.onRefresh});
 
   @override
   State<CallCenterDashboard> createState() => _CallCenterDashboardState();
@@ -44,7 +44,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: DataService.notifier,
-      builder: (context, _, __) {
+      builder: (context, _, _) {
         final allStudents = DataService.getAllStudents();
         final withResults = allStudents
             .where((s) => DataService.hasResult(s.id))
@@ -64,7 +64,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
         final upcomingExams = allStudents.where((s) => '${s.examDate} ${s.examTime}'.compareTo(nowStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
 
         return Padding(
-          padding: const EdgeInsets.all(32),
+          padding: EdgeInsets.all(32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -80,7 +80,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       isDark: false,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: StatCard(
                       title: 'Results Ready',
@@ -89,7 +89,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.success,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: StatCard(
                       title: 'Passed Students',
@@ -98,7 +98,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.success,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: StatCard(
                       title: 'Failed Students',
@@ -107,7 +107,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.danger,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: StatCard(
                       title: 'Awaiting',
@@ -116,7 +116,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.warning,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: StatCard(
                       title: "Today's Exams",
@@ -125,7 +125,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       color: AppTheme.accent,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: StatCard(
                       title: 'Upcoming Exams',
@@ -136,7 +136,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                   ),
                 ],
               ),
-              const SizedBox(height: 28),
+              SizedBox(height: 28),
 
               // Search + filter row
               Row(
@@ -147,7 +147,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       style: AppTextStyle.body,
                       decoration: InputDecoration(
                         hintText: 'Search by name, grade, or phone...',
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Icons.search,
                           color: AppTheme.textMuted,
                           size: 18,
@@ -157,36 +157,36 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                         hoverColor: Colors.transparent,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
-                          borderSide: const BorderSide(color: AppTheme.border),
+                          borderSide: BorderSide(color: AppTheme.border),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
-                          borderSide: const BorderSide(color: AppTheme.border),
+                          borderSide: BorderSide(color: AppTheme.border),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: AppTheme.accent,
                             width: 2,
                           ),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
+                        contentPadding: EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 12,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   ...['All', 'Pending', 'Results Ready'].map(
                     (tab) => Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                      padding: EdgeInsets.only(left: 8),
                       child: _filterChip(tab),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Table
               Expanded(
@@ -204,7 +204,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                             Expanded(
                               child: ListView.separated(
                                 itemCount: _filtered.length,
-                                separatorBuilder: (_, __) => const Divider(
+                                separatorBuilder: (_, _) => Divider(
                                   height: 1,
                                   color: AppTheme.border,
                                 ),
@@ -228,8 +228,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
     return GestureDetector(
       onTap: () => setState(() => _filterTab = label),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        duration: Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
           color: isActive ? AppTheme.accent.withValues(alpha: 0.12) : AppTheme.card,
           borderRadius: BorderRadius.circular(8),
@@ -247,8 +247,8 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
 
   Widget _tableHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
@@ -288,7 +288,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
       onTap: () => _openProfile(student),
       hoverColor: AppTheme.cardHover.withValues(alpha: 0.5),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         child: Row(
           children: [
             // Name + avatar
@@ -314,7 +314,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,9 +342,9 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                   _cell(student.examDate),
                   if ('${student.examDate} ${student.examTime}'.compareTo(nowStr) < 0)
                     Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                      padding: EdgeInsets.only(left: 8),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: AppTheme.textMuted.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
@@ -362,9 +362,9 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
               child: hasResult
                   ? Row(children: [
                       GradeBadge(grade: result!.grade),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: (result.isPassed ?? result.overallPercent >= 50) 
                               ? AppTheme.success.withValues(alpha: 0.1) 
@@ -384,7 +384,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                   : Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
                           ),
@@ -410,7 +410,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                     message: 'View Profile',
                     child: IconButton(
                       onPressed: () => _openProfile(student),
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.open_in_new,
                         color: AppTheme.accent,
                         size: 16,
@@ -421,7 +421,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
                     message: 'Delete',
                     child: IconButton(
                       onPressed: () => _confirmDelete(student),
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.delete_outline,
                         color: AppTheme.danger,
                         size: 16,
@@ -483,7 +483,7 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
               }
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppTheme.danger),
-            child: const Text('Delete'),
+            child: Text('Delete'),
           ),
         ],
       ),
@@ -495,10 +495,10 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.people_outline, color: AppTheme.textMuted, size: 64),
-          const SizedBox(height: 16),
+          Icon(Icons.people_outline, color: AppTheme.textMuted, size: 64),
+          SizedBox(height: 16),
           Text('No students found', style: AppTextStyle.subtitle),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text('Register a student using the form on the left',
               style: AppTextStyle.caption),
         ],
@@ -506,3 +506,5 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
     );
   }
 }
+
+

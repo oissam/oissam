@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../theme/app_theme.dart';
-import '../services/data_service.dart';
-import '../models/models.dart';
-import 'login_screen.dart';
 import 'call_center/register_screen.dart';
 import 'call_center/cc_dashboard.dart';
 import 'call_center/cc_filtered_students.dart';
@@ -18,7 +15,7 @@ class _NavItem {
   final String label;
   final IconData icon;
   final List<String>? subItems; // Optional sub-menus
-  const _NavItem(this.label, this.icon, {this.subItems});
+  _NavItem(this.label, this.icon, {this.subItems});
 }
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -27,7 +24,7 @@ class _NavItem {
 
 class CallCenterShell extends StatefulWidget {
   final VoidCallback onLogout;
-  const CallCenterShell({super.key, required this.onLogout});
+  CallCenterShell({super.key, required this.onLogout});
 
   @override
   State<CallCenterShell> createState() => _CallCenterShellState();
@@ -36,7 +33,7 @@ class CallCenterShell extends StatefulWidget {
 class _CallCenterShellState extends State<CallCenterShell> {
   int _selectedIndex = 0;
 
-  static const _navItems = [
+  static final _navItems = [
     _NavItem('Dashboard', Icons.grid_view_rounded),
     _NavItem('Register Student', Icons.person_add_rounded),
     _NavItem('Passed Students', Icons.check_circle_outline),
@@ -49,9 +46,9 @@ class _CallCenterShellState extends State<CallCenterShell> {
       case 1: return RegisterStudentScreen(onSaved: () {
           setState(() => _selectedIndex = 0);
         });
-      case 2: return const CCFilteredStudentsScreen(isPassed: true);
-      case 3: return const CCFilteredStudentsScreen(isPassed: false);
-      default: return const Center(child: Text('Under Construction'));
+      case 2: return CCFilteredStudentsScreen(isPassed: true);
+      case 3: return CCFilteredStudentsScreen(isPassed: false);
+      default: return Center(child: Text('Under Construction'));
     }
   }
 
@@ -76,7 +73,7 @@ class _CallCenterShellState extends State<CallCenterShell> {
 
 class ExaminatorShell extends StatefulWidget {
   final VoidCallback onLogout;
-  const ExaminatorShell({super.key, required this.onLogout});
+  ExaminatorShell({super.key, required this.onLogout});
 
   @override
   State<ExaminatorShell> createState() => _ExaminatorShellState();
@@ -85,7 +82,7 @@ class ExaminatorShell extends StatefulWidget {
 class _ExaminatorShellState extends State<ExaminatorShell> {
   int _selectedIndex = 0;
 
-  static const _navItems = [
+  static final _navItems = [
     _NavItem('Students', Icons.people_rounded),
     _NavItem('Timetable', Icons.calendar_month_rounded),
     _NavItem('Manage Schedule', Icons.edit_calendar_rounded),
@@ -94,11 +91,11 @@ class _ExaminatorShellState extends State<ExaminatorShell> {
 
   Widget get _body {
     switch (_selectedIndex) {
-      case 0: return const ExStudentListScreen();
-      case 1: return const TimetableScreen();
-      case 2: return const ManageScheduleScreen();
-      case 3: return const EnterResultsScreen();
-      default: return const SizedBox.shrink();
+      case 0: return ExStudentListScreen();
+      case 1: return TimetableScreen();
+      case 2: return ManageScheduleScreen();
+      case 3: return EnterResultsScreen();
+      default: return SizedBox.shrink();
     }
   }
 
@@ -127,7 +124,7 @@ class _ShellLayout extends StatelessWidget {
   final VoidCallback onLogout;
   final Widget body;
 
-  const _ShellLayout({
+  _ShellLayout({
     required this.roleLabel,
     required this.navItems,
     required this.selectedIndex,
@@ -141,7 +138,7 @@ class _ShellLayout extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Row(
           children: [
             _ExpandableSidebar(
@@ -151,7 +148,7 @@ class _ShellLayout extends StatelessWidget {
               onSelect: onSelect,
               onLogout: onLogout,
             ),
-            const SizedBox(width: 24),
+            SizedBox(width: 24),
 
             // Main Content Area
             Expanded(
@@ -166,7 +163,7 @@ class _ShellLayout extends StatelessWidget {
                         pageTitle: navItems[selectedIndex].label,
                         roleLabel: roleLabel,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       // Content
                       Expanded(child: body),
                     ],
@@ -188,7 +185,7 @@ class _ExpandableSidebar extends StatefulWidget {
   final ValueChanged<int> onSelect;
   final VoidCallback onLogout;
 
-  const _ExpandableSidebar({
+  _ExpandableSidebar({
     required this.roleLabel,
     required this.navItems,
     required this.selectedIndex,
@@ -209,7 +206,7 @@ class _ExpandableSidebarState extends State<_ExpandableSidebar> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
+        duration: Duration(milliseconds: 250),
         curve: Curves.easeInOut,
         width: _isHovered ? 260 : 70,
         decoration: BoxDecoration(
@@ -222,10 +219,10 @@ class _ExpandableSidebarState extends State<_ExpandableSidebar> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 32),
+              SizedBox(height: 32),
               // Header
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 22),
+                padding: EdgeInsets.symmetric(horizontal: 22),
                 child: Row(
                   children: [
                     HugeIcon(
@@ -235,10 +232,10 @@ class _ExpandableSidebarState extends State<_ExpandableSidebar> {
                     ),
                     Expanded(
                       child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 200),
+                        duration: Duration(milliseconds: 200),
                         opacity: _isHovered ? 1.0 : 0.0,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 16),
+                          padding: EdgeInsets.only(left: 16),
                           child: Text(
                             'Menu',
                             style: GoogleFonts.nunito(
@@ -255,11 +252,11 @@ class _ExpandableSidebarState extends State<_ExpandableSidebar> {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: 40),
               
               Expanded(
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                   itemCount: widget.navItems.length,
                   itemBuilder: (context, i) {
                     final item = widget.navItems[i];
@@ -275,9 +272,31 @@ class _ExpandableSidebarState extends State<_ExpandableSidebar> {
                 ),
               ),
               
+              // Theme toggle button
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: ValueListenableBuilder<ThemeMode>(
+                  valueListenable: AppTheme.themeNotifier,
+                  builder: (context, themeMode, _) {
+                    final isDark = themeMode == ThemeMode.dark;
+                    return _SidebarItem(
+                      icon: isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                      label: isDark ? 'Light Mode' : 'Dark Mode',
+                      isActive: false,
+                      isExpanded: _isHovered,
+                      onTap: () {
+                        AppTheme.themeNotifier.value = 
+                            isDark ? ThemeMode.light : ThemeMode.dark;
+                      },
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: 8),
+              
               // Logout button at the bottom
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: 12),
                 child: _SidebarItem(
                   icon: Icons.logout_rounded,
                   label: 'Log out',
@@ -286,13 +305,13 @@ class _ExpandableSidebarState extends State<_ExpandableSidebar> {
                   onTap: widget.onLogout,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               
               // Role label
               Padding(
-                padding: const EdgeInsets.fromLTRB(12, 0, 12, 24),
+                padding: EdgeInsets.fromLTRB(12, 0, 12, 24),
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
+                  duration: Duration(milliseconds: 250),
                   padding: EdgeInsets.symmetric(
                     horizontal: _isHovered ? 16 : 10,
                     vertical: 12,
@@ -310,10 +329,10 @@ class _ExpandableSidebarState extends State<_ExpandableSidebar> {
                       ),
                       Expanded(
                         child: AnimatedOpacity(
-                          duration: const Duration(milliseconds: 200),
+                          duration: Duration(milliseconds: 200),
                           opacity: _isHovered ? 1.0 : 0.0,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 12),
+                            padding: EdgeInsets.only(left: 12),
                             child: Text(
                               widget.roleLabel,
                               style: GoogleFonts.nunito(
@@ -345,7 +364,7 @@ class _SidebarItem extends StatefulWidget {
   final bool isExpanded;
   final VoidCallback onTap;
 
-  const _SidebarItem({
+  _SidebarItem({
     required this.icon,
     required this.label,
     required this.isActive,
@@ -363,7 +382,7 @@ class _SidebarItemState extends State<_SidebarItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 4),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -374,7 +393,7 @@ class _SidebarItemState extends State<_SidebarItem> {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
+            duration: Duration(milliseconds: 150),
             padding: EdgeInsets.symmetric(
               horizontal: widget.isExpanded ? 16 : 10,
               vertical: 12,
@@ -394,10 +413,10 @@ class _SidebarItemState extends State<_SidebarItem> {
                 ),
                 Expanded(
                   child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 200),
+                    duration: Duration(milliseconds: 200),
                     opacity: widget.isExpanded ? 1.0 : 0.0,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16),
+                      padding: EdgeInsets.only(left: 16),
                       child: Text(
                         widget.label,
                         style: GoogleFonts.nunito(
@@ -425,7 +444,7 @@ class _FloatingTopBar extends StatelessWidget {
   final String pageTitle;
   final String roleLabel;
 
-  const _FloatingTopBar({
+  _FloatingTopBar({
     required this.pageTitle,
     required this.roleLabel,
   });
@@ -434,8 +453,8 @@ class _FloatingTopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 72,
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 32),
+      margin: EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.symmetric(horizontal: 32),
       decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius: BorderRadius.circular(32),
@@ -455,3 +474,5 @@ class _FloatingTopBar extends StatelessWidget {
     );
   }
 }
+
+

@@ -6,7 +6,7 @@ enum UserRole { callCenter, examinator }
 
 class LoginScreen extends StatefulWidget {
   final Function(UserRole) onLogin;
-  const LoginScreen({super.key, required this.onLogin});
+  LoginScreen({super.key, required this.onLogin});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen>
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  UserRole _selectedRole = UserRole.callCenter;
+  final UserRole _selectedRole = UserRole.callCenter;
   bool _isLoading = false;
   bool _obscurePassword = true;
   String? _errorMsg;
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen>
   late Animation<double> _fadeAnimation;
 
   // Credentials
-  static const Map<UserRole, Map<String, String>> _credentials = {
+  static Map<UserRole, Map<String, String>> _credentials = {
     UserRole.callCenter: {'username': 'amirfattoyev', 'password': 'exam2026'},
     UserRole.examinator: {'username': 'exam', 'password': '2026exam'},
   };
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
     _fadeController = AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
+        duration: Duration(milliseconds: 800), vsync: this);
     _fadeAnimation = CurvedAnimation(
         parent: _fadeController, curve: Curves.easeOut);
     _fadeController.forward();
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen>
       _errorMsg = null;
     });
 
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(Duration(milliseconds: 600));
 
     final inputUsername = _usernameController.text.trim();
     final inputPassword = _passwordController.text;
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen>
                   // Left branding panel
                   Container(
                     width: 420,
-                    padding: const EdgeInsets.all(60),
+                    padding: EdgeInsets.all(60),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -135,17 +135,17 @@ class _LoginScreenState extends State<LoginScreen>
                             color: AppTheme.accent,
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: const Icon(Icons.school_rounded,
+                          child: Icon(Icons.school_rounded,
                               color: Colors.white, size: 30),
                         ),
-                        const SizedBox(height: 32),
+                        SizedBox(height: 32),
                         Text('Internal\nExam Planner',
                             style: GoogleFonts.nunito(
                                 color: AppTheme.textPrimary,
                                 fontSize: 40,
                                 fontWeight: FontWeight.w800,
                                 height: 1.1)),
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         Text(
                           'Manage student registrations,\nexam schedules, and results\nall in one place.',
                           style: GoogleFonts.nunito(
@@ -153,11 +153,11 @@ class _LoginScreenState extends State<LoginScreen>
                               fontSize: 15,
                               height: 1.6),
                         ),
-                        const SizedBox(height: 48),
+                        SizedBox(height: 48),
                         _featureRow(Icons.people_alt_rounded, 'Student Management'),
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12),
                         _featureRow(Icons.calendar_month_rounded, 'Exam Scheduling'),
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12),
                         _featureRow(Icons.analytics_rounded, 'Smart Score Calculator'),
                       ],
                     ),
@@ -165,8 +165,8 @@ class _LoginScreenState extends State<LoginScreen>
                   // Right login card
                   Container(
                     width: 420,
-                    margin: const EdgeInsets.all(24),
-                    padding: const EdgeInsets.all(40),
+                    margin: EdgeInsets.all(24),
+                    padding: EdgeInsets.all(40),
                     decoration: BoxDecoration(
                       color: AppTheme.card,
                       borderRadius: BorderRadius.circular(24),
@@ -184,11 +184,11 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: AppTheme.textPrimary,
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text('Sign in to continue',
                               style: GoogleFonts.nunito(
                                   color: AppTheme.textSecondary, fontSize: 14)),
-                          const SizedBox(height: 32),
+                          SizedBox(height: 32),
 
                           // Username
                           Text('Username',
@@ -196,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: AppTheme.textSecondary,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500)),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           TextFormField(
                             controller: _usernameController,
                             style: GoogleFonts.nunito(
@@ -204,13 +204,13 @@ class _LoginScreenState extends State<LoginScreen>
                             validator: (v) => (v == null || v.trim().isEmpty)
                                 ? 'Required'
                                 : null,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               hintText: 'Enter your username',
                               prefixIcon: Icon(Icons.person_outline,
                                   color: AppTheme.textMuted, size: 18),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
 
                           // Password
                           Text('Password',
@@ -218,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: AppTheme.textSecondary,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500)),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           TextFormField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
@@ -229,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 : null,
                             decoration: InputDecoration(
                               hintText: 'Enter your password',
-                              prefixIcon: const Icon(Icons.lock_outline,
+                              prefixIcon: Icon(Icons.lock_outline,
                                   color: AppTheme.textMuted, size: 18),
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -245,9 +245,9 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
 
                           if (_errorMsg != null) ...[
-                            const SizedBox(height: 12),
+                            SizedBox(height: 12),
                             Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 color: AppTheme.danger.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
@@ -257,9 +257,9 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                               child: Row(
                                 children: [
-                                  const Icon(Icons.error_outline,
+                                  Icon(Icons.error_outline,
                                       color: AppTheme.danger, size: 16),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8),
                                   Text(_errorMsg!,
                                       style: GoogleFonts.nunito(
                                           color: AppTheme.danger,
@@ -269,7 +269,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ),
                           ],
 
-                          const SizedBox(height: 28),
+                          SizedBox(height: 28),
 
                           SizedBox(
                             width: double.infinity,
@@ -277,13 +277,13 @@ class _LoginScreenState extends State<LoginScreen>
                               onPressed: _isLoading ? null : _login,
                               style: ElevatedButton.styleFrom(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
+                                    EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24)),
                                 backgroundColor: AppTheme.accent,
                               ),
                               child: _isLoading
-                                  ? const SizedBox(
+                                  ? SizedBox(
                                       height: 18,
                                       width: 18,
                                       child: CircularProgressIndicator(
@@ -298,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ),
                           ),
 
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20),
                         ],
                       ),
                     ),
@@ -316,14 +316,14 @@ class _LoginScreenState extends State<LoginScreen>
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(6),
+          padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
             color: AppTheme.accent.withOpacity(0.15),
             borderRadius: BorderRadius.circular(6),
           ),
           child: Icon(icon, color: AppTheme.accent, size: 16),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 10),
         Text(text,
             style: GoogleFonts.nunito(
                 color: AppTheme.textSecondary, fontSize: 14)),
@@ -331,3 +331,5 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 }
+
+

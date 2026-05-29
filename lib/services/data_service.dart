@@ -6,10 +6,10 @@ import '../models/models.dart';
 class DataService {
   static final _supabase = Supabase.instance.client;
 
-  static const List<String> classes = ['5', '6', '7', '8', '9', '10', '11'];
-  static const List<String> languages = ['Uzbek', 'Russian'];
-  static const List<String> rooms = ['Room 1', 'Room 2', 'Room 3'];
-  static const List<String> essayGrades = ['A1', 'A2', 'B1', 'B2'];
+  static List<String> classes = ['5', '6', '7', '8', '9', '10', '11'];
+  static List<String> languages = ['Uzbek', 'Russian'];
+  static List<String> rooms = ['Room 1', 'Room 2', 'Room 3'];
+  static List<String> essayGrades = ['A1', 'A2', 'B1', 'B2'];
 
   /// Fires every time any in-memory data changes (incremented counter).
   static final ValueNotifier<int> notifier = ValueNotifier(0);
@@ -99,7 +99,7 @@ class DataService {
       resultsCompleter.future,
       schedulesCompleter.future,
     ]).timeout(
-      const Duration(seconds: 10),
+      Duration(seconds: 10),
       onTimeout: () {
         debugPrint('[DataService] init timed out waiting for streams');
         if (!studentsCompleter.isCompleted) studentsCompleter.complete();
@@ -306,3 +306,5 @@ class DataService {
     }
   }
 }
+
+

@@ -9,7 +9,7 @@ import '../../widgets/student_profile_dialog.dart';
 // ── Examinator: Student List ─────────────────────────────────────────────
 
 class ExStudentListScreen extends StatefulWidget {
-  const ExStudentListScreen({super.key});
+  ExStudentListScreen({super.key});
 
   @override
   State<ExStudentListScreen> createState() => _ExStudentListScreenState();
@@ -38,7 +38,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: DataService.notifier,
-      builder: (context, _, __) {
+      builder: (context, _, _) {
         final uniqueDates = DataService.getAvailableDates();
         
         final now = DateTime.now();
@@ -61,7 +61,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
         final failedCount = withResults.length - passedCount;
 
         return Padding(
-          padding: const EdgeInsets.all(32),
+          padding: EdgeInsets.all(32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -69,15 +69,15 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0x26374151), // examinatorColor 15%
+                      color: Color(0x26374151), // examinatorColor 15%
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    child: const Icon(Icons.people_alt_rounded,
+                    child: Icon(Icons.people_alt_rounded,
                         color: AppTheme.examinatorColor, size: 22),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -86,11 +86,11 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                           style: AppTextStyle.subtitle),
                     ],
                   ),
-                  const Spacer(),
+                  Spacer(),
                   Text('${_filtered.length} students', style: AppTextStyle.caption),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               
               Wrap(
                 spacing: 16,
@@ -148,7 +148,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Filters
               Row(
@@ -158,19 +158,19 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                       _filterDate,
                       [null, ...uniqueDates],
                       (v) => setState(() => _filterDate = v)),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   _filterDropdown(
                       'Room',
                       _filterRoom,
                       [null, ...DataService.rooms],
                       (v) => setState(() => _filterRoom = v)),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   _filterDropdown(
                       'Time',
                       _filterTime,
                       [null, ...DataService.getAllTimes()],
                       (v) => setState(() => _filterTime = v)),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   if (_filterDate != null ||
                       _filterRoom != null ||
                       _filterTime != null)
@@ -180,14 +180,14 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                         _filterRoom = null;
                         _filterTime = null;
                       }),
-                      icon: const Icon(Icons.clear, size: 16),
-                      label: const Text('Clear Filters'),
+                      icon: Icon(Icons.clear, size: 16),
+                      label: Text('Clear Filters'),
                       style: TextButton.styleFrom(
                           foregroundColor: AppTheme.textSecondary),
                     ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Table
               Expanded(
@@ -205,7 +205,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                             Expanded(
                               child: ListView.separated(
                                 itemCount: _filtered.length,
-                                separatorBuilder: (_, __) => const Divider(
+                                separatorBuilder: (_, _) => Divider(
                                     height: 1, color: AppTheme.border),
                                 itemBuilder: (ctx, i) =>
                                     _studentRow(_filtered[i]),
@@ -230,7 +230,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 6),
+            padding: EdgeInsets.only(left: 4, bottom: 6),
             child: Text(
               label,
               style: GoogleFonts.nunito(
@@ -241,7 +241,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
             ),
           ),
           DropdownButtonFormField<String>(
-            value: value,
+            initialValue: value,
             isExpanded: true,
             hint: Text('All ${label}s', style: AppTextStyle.caption),
             items: options
@@ -256,19 +256,19 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
               filled: true,
               fillColor: AppTheme.card,
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
-                borderSide: const BorderSide(color: AppTheme.border),
+                borderSide: BorderSide(color: AppTheme.border),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
-                borderSide: const BorderSide(color: AppTheme.border),
+                borderSide: BorderSide(color: AppTheme.border),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide:
-                    const BorderSide(color: AppTheme.accent, width: 1.5),
+                    BorderSide(color: AppTheme.accent, width: 1.5),
               ),
             ),
           ),
@@ -279,8 +279,8 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
 
   Widget _tableHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(16)),
@@ -319,7 +319,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         child: Row(
           children: [
             Expanded(
@@ -328,7 +328,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                 Container(
                   width: 36,
                   height: 36,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Color(0x26374151), // examinatorColor 15%
                     shape: BoxShape.circle,
                   ),
@@ -339,7 +339,7 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: Text(s.fullName, style: AppTextStyle.body),
                 ),
@@ -354,9 +354,9 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                   _cell(s.examDate),
                   if ('${s.examDate} ${s.examTime}'.compareTo(nowStr) < 0)
                     Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                      padding: EdgeInsets.only(left: 8),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: AppTheme.textMuted.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
@@ -373,15 +373,15 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
               flex: 2,
               child: hasResult
                   ? Row(children: [
-                      const Icon(Icons.check_circle,
+                      Icon(Icons.check_circle,
                           color: AppTheme.success, size: 16),
-                      const SizedBox(width: 6),
+                      SizedBox(width: 6),
                       Text('Done',
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: AppTheme.success, fontSize: 13)),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: ((DataService.getResult(s.id)!.isPassed ?? DataService.getResult(s.id)!.overallPercent >= 50)) 
                               ? AppTheme.success.withValues(alpha: 0.1) 
@@ -399,9 +399,9 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                       )
                     ])
                   : Row(children: [
-                      const Icon(Icons.pending,
+                      Icon(Icons.pending,
                           color: AppTheme.warning, size: 16),
-                      const SizedBox(width: 6),
+                      SizedBox(width: 6),
                       Text('Pending',
                           style: GoogleFonts.nunito(
                               color: AppTheme.warning, fontSize: 13)),
@@ -420,8 +420,8 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.people_outline, color: AppTheme.textMuted, size: 56),
-          const SizedBox(height: 16),
+          Icon(Icons.people_outline, color: AppTheme.textMuted, size: 56),
+          SizedBox(height: 16),
           Text('No students match filters', style: AppTextStyle.subtitle),
         ],
       ),
@@ -432,13 +432,13 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
 // ── Examinator: Timetable ────────────────────────────────────────────────
 
 class TimetableScreen extends StatelessWidget {
-  const TimetableScreen({super.key});
+  TimetableScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: DataService.notifier,
-      builder: (context, _, __) => _buildContent(context),
+      builder: (context, _, _) => _buildContent(context),
     );
   }
 
@@ -471,26 +471,26 @@ class TimetableScreen extends StatelessWidget {
     final nowStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     return Padding(
-      padding: const EdgeInsets.all(32),
+      padding: EdgeInsets.all(32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: AppTheme.examinatorColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Icon(Icons.calendar_month_rounded,
+                child: Icon(Icons.calendar_month_rounded,
                     color: AppTheme.examinatorColor, size: 22),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Text('Exam Timetable', style: AppTextStyle.heading2),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           if (sortedDates.isEmpty)
             Expanded(
@@ -498,9 +498,9 @@ class TimetableScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.calendar_today_outlined,
+                    Icon(Icons.calendar_today_outlined,
                         color: AppTheme.textMuted, size: 56),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Text('No exams scheduled yet', style: AppTextStyle.subtitle),
                   ],
                 ),
@@ -516,7 +516,7 @@ class TimetableScreen extends StatelessWidget {
                   final sortedTimes = byTime.keys.toList()..sort();
 
                   return Container(
-                    margin: const EdgeInsets.only(bottom: 24),
+                    margin: EdgeInsets.only(bottom: 24),
                     decoration: BoxDecoration(
                       color: AppTheme.card,
                       borderRadius: BorderRadius.circular(16),
@@ -527,7 +527,7 @@ class TimetableScreen extends StatelessWidget {
                       children: [
                         // Date header
                         Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 14),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -536,18 +536,18 @@ class TimetableScreen extends StatelessWidget {
                                 AppTheme.accent.withValues(alpha: 0.1),
                               ],
                             ),
-                            borderRadius: const BorderRadius.vertical(
+                            borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(16)),
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.event,
+                              Icon(Icons.event,
                                   color: AppTheme.examinatorColor, size: 18),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
                               Text(date, style: AppTextStyle.bodyBold),
-                              const Spacer(),
+                              Spacer(),
                               Container(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(
                                   color: AppTheme.examinatorColor
@@ -570,15 +570,15 @@ class TimetableScreen extends StatelessWidget {
                         ...sortedTimes.map((time) {
                           final byRoom = byTime[time]!;
                           return Padding(
-                            padding: const EdgeInsets.all(16),
+                            padding: EdgeInsets.all(16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Icons.access_time,
+                                    Icon(Icons.access_time,
                                         color: AppTheme.accent, size: 16),
-                                    const SizedBox(width: 6),
+                                    SizedBox(width: 6),
                                     Text(time,
                                         style: GoogleFonts.nunito(
                                             color: AppTheme.accent,
@@ -586,9 +586,9 @@ class TimetableScreen extends StatelessWidget {
                                             fontWeight: FontWeight.w600)),
                                     if ('$date $time'.compareTo(nowStr) < 0)
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 8),
+                                        padding: EdgeInsets.only(left: 8),
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 6, vertical: 2),
                                           decoration: BoxDecoration(
                                             color: AppTheme.danger.withValues(alpha: 0.1),
@@ -603,13 +603,13 @@ class TimetableScreen extends StatelessWidget {
                                                   fontWeight: FontWeight.w700)),
                                         ),
                                       ),
-                                    const SizedBox(width: 8),
-                                    const Expanded(
+                                    SizedBox(width: 8),
+                                    Expanded(
                                         child: Divider(
                                             color: AppTheme.border)),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
+                                SizedBox(height: 10),
                                 Row(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.start,
@@ -623,9 +623,9 @@ class TimetableScreen extends StatelessWidget {
                                         },
                                         borderRadius: BorderRadius.circular(16),
                                         child: Container(
-                                        margin: const EdgeInsets.only(
+                                        margin: EdgeInsets.only(
                                             right: 12),
-                                        padding: const EdgeInsets.all(12),
+                                        padding: EdgeInsets.all(12),
                                         decoration: BoxDecoration(
                                           color: roomStudents.isNotEmpty
                                               ? AppTheme.accent
@@ -646,12 +646,12 @@ class TimetableScreen extends StatelessWidget {
                                           children: [
                                             Row(
                                               children: [
-                                                const Icon(
+                                                Icon(
                                                     Icons.meeting_room,
                                                     size: 14,
                                                     color:
                                                         AppTheme.textMuted),
-                                                const SizedBox(width: 4),
+                                                SizedBox(width: 4),
                                                 Text(room,
                                                     style: GoogleFonts.nunito(
                                                         color: AppTheme
@@ -660,11 +660,11 @@ class TimetableScreen extends StatelessWidget {
                                                         fontWeight:
                                                             FontWeight
                                                                 .w600)),
-                                                const Spacer(),
+                                                Spacer(),
                                                 if (roomStudents
                                                     .isNotEmpty)
                                                   Container(
-                                                    padding: const EdgeInsets
+                                                    padding: EdgeInsets
                                                         .symmetric(
                                                         horizontal: 6,
                                                         vertical: 2),
@@ -690,11 +690,11 @@ class TimetableScreen extends StatelessWidget {
                                               ],
                                             ),
                                             if (roomStudents.isNotEmpty) ...[
-                                              const SizedBox(height: 8),
+                                              SizedBox(height: 8),
                                               ...roomStudents.map(
                                                 (s) => Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
+                                                      EdgeInsets.only(
                                                           bottom: 4),
                                                   child: Text(
                                                     '• ${s.fullName}',
@@ -706,7 +706,7 @@ class TimetableScreen extends StatelessWidget {
                                                 ),
                                               ),
                                             ] else ...[
-                                              const SizedBox(height: 8),
+                                              SizedBox(height: 8),
                                               Text('Empty',
                                                   style: GoogleFonts.nunito(
                                                       color:
@@ -758,8 +758,8 @@ class TimetableScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         title: Row(
           children: [
-            const Icon(Icons.analytics, color: AppTheme.examinatorColor),
-            const SizedBox(width: 10),
+            Icon(Icons.analytics, color: AppTheme.examinatorColor),
+            SizedBox(width: 10),
             Text('Session Summary', style: GoogleFonts.nunito(color: AppTheme.textPrimary, fontWeight: FontWeight.bold)),
           ],
         ),
@@ -767,13 +767,13 @@ class TimetableScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('$date at $time - $room', style: GoogleFonts.nunito(color: AppTheme.textSecondary)),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             _statRow('Total Students', students.length, AppTheme.accent),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             _statRow('Passed', passed, AppTheme.success),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             _statRow('Failed', failed, AppTheme.danger),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             _statRow('Pending', pending, AppTheme.warning),
           ],
         ),
@@ -793,7 +793,7 @@ class TimetableScreen extends StatelessWidget {
       children: [
         Text(label, style: GoogleFonts.nunito(color: AppTheme.textPrimary, fontSize: 16)),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(12),
@@ -804,3 +804,5 @@ class TimetableScreen extends StatelessWidget {
     );
   }
 }
+
+
