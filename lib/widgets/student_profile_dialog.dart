@@ -215,6 +215,43 @@ class StudentProfileDialog extends StatelessWidget {
                               ),
                             ),
                           ],
+                          if (result!.commentary != null && result!.commentary!.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: AppTheme.surface,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: AppTheme.border),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.comment_rounded, color: AppTheme.textMuted, size: 16),
+                                      const SizedBox(width: 6),
+                                      Text('Examinator Commentary',
+                                          style: GoogleFonts.nunito(
+                                              color: AppTheme.textSecondary,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    result!.commentary!,
+                                    style: GoogleFonts.nunito(
+                                      color: AppTheme.textPrimary,
+                                      fontSize: 13,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                           const Divider(color: AppTheme.border, height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

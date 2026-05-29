@@ -73,6 +73,7 @@ class ExamResult {
   final String essayGrade; // A1, A2, B1, B2
   final String? essayText; // Pasted essay text
   final bool? isPassed; // Manual Pass/Fail override
+  final String? commentary; // Examinator feedback
   final DateTime enteredAt;
 
   ExamResult({
@@ -84,6 +85,7 @@ class ExamResult {
     required this.essayGrade,
     this.essayText,
     this.isPassed,
+    this.commentary,
     required this.enteredAt,
   });
 
@@ -108,6 +110,7 @@ class ExamResult {
         'essay_grade': essayGrade,
         'essay_text': essayText,
         'is_passed': isPassed,
+        'commentary': commentary,
         'entered_at': enteredAt.toIso8601String(),
       };
 
@@ -120,6 +123,7 @@ class ExamResult {
         essayGrade: json['essay_grade'] ?? json['essayGrade'],
         essayText: json['essay_text'] ?? json['essayText'],
         isPassed: json['is_passed'] ?? json['isPassed'],
+        commentary: json['commentary'],
         enteredAt: DateTime.parse(json['entered_at'] ?? json['enteredAt']),
       );
 }

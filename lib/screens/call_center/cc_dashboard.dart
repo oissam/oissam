@@ -286,6 +286,9 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
   Widget _studentRow(Student student) {
     final hasResult = DataService.hasResult(student.id);
     final result = hasResult ? DataService.getResult(student.id) : null;
+    
+    final now = DateTime.now();
+    final nowStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     return InkWell(
       onTap: () => _openProfile(student),

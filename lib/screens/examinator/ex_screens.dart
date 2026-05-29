@@ -302,6 +302,9 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
 
   Widget _studentRow(Student s) {
     final hasResult = DataService.hasResult(s.id);
+    
+    final now = DateTime.now();
+    final nowStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
     return InkWell(
       onTap: () {
         showDialog(
@@ -611,7 +614,12 @@ class TimetableScreen extends StatelessWidget {
                                     final roomStudents =
                                         byRoom[room] ?? [];
                                     return Expanded(
-                                      child: Container(
+                                      child: InkWell(
+                                        onTap: roomStudents.isEmpty ? null : () {
+                                          _showRoomStatsDialog(context, date, time, room, roomStudents);
+                                        },
+                                        borderRadius: BorderRadius.circular(16),
+                                        child: Container(
                                         margin: const EdgeInsets.only(
                                             right: 12),
                                         padding: const EdgeInsets.all(12),
@@ -705,6 +713,7 @@ class TimetableScreen extends StatelessWidget {
                                           ],
                                         ),
                                       ),
+                                    ),
                                     );
                                   }).toList(),
                                 ),
@@ -720,6 +729,75 @@ class TimetableScreen extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+
+  void _showRoomStatsDialog(BuildContext context, String date, String time, String room, List<Student> students) {
+    int passed = 0;
+    int failed = 0;
+    int pending = 0;
+
+    for (final s in students) {
+      final res = DataService.getResult(s.id);
+      if (res == null || res.isPassed == null) {
+        pending++;
+      } else if (res.isPassed!) {
+        passed++;
+      } else {
+        failed++;
+      }
+    }
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppTheme.card,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        title: Row(
+          children: [
+            const Icon(Icons.analytics, color: AppTheme.examinatorColor),
+            const SizedBox(width: 10),
+            Text('Session Summary', style: GoogleFonts.nunito(color: AppTheme.textPrimary, fontWeight: FontWeight.bold)),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('$date at $time - $room', style: GoogleFonts.nunito(color: AppTheme.textSecondary)),
+            const SizedBox(height: 24),
+            _statRow('Total Students', students.length, AppTheme.accent),
+            const SizedBox(height: 12),
+            _statRow('Passed', passed, AppTheme.success),
+            const SizedBox(height: 12),
+            _statRow('Failed', failed, AppTheme.danger),
+            const SizedBox(height: 12),
+            _statRow('Pending', pending, AppTheme.warning),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text('Close', style: GoogleFonts.nunito(color: AppTheme.textSecondary)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _statRow(String label, int value, Color color) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: GoogleFonts.nunito(color: AppTheme.textPrimary, fontSize: 16)),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(value.toString(), style: GoogleFonts.nunito(color: color, fontWeight: FontWeight.bold, fontSize: 16)),
+        ),
+      ],
     );
   }
 }

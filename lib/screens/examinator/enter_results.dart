@@ -19,6 +19,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
   final _engAnsweredCtrl = TextEditingController();
   final _engTotalCtrl = TextEditingController();
   final _essayTextCtrl = EssayTextController();
+  final _commentaryCtrl = TextEditingController();
   String? _essayGrade;
   bool? _isPassed;
   bool _isSaving = false;
@@ -102,6 +103,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
       englishTotal: et,
       essayGrade: _essayGrade!,
       essayText: _essayTextCtrl.text.trim().isEmpty ? null : _essayTextCtrl.text.trim(),
+      commentary: _commentaryCtrl.text.trim().isEmpty ? null : _commentaryCtrl.text.trim(),
       isPassed: _isPassed,
       enteredAt: DateTime.now(),
     );
@@ -129,6 +131,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
     _engAnsweredCtrl.clear();
     _engTotalCtrl.clear();
     _essayTextCtrl.clear();
+    _commentaryCtrl.clear();
   }
 
   void _snack(String msg, Color color) {
@@ -145,6 +148,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
       _engAnsweredCtrl.text = existing.englishAnswered.toString();
       _engTotalCtrl.text = existing.englishTotal.toString();
       _essayTextCtrl.text = existing.essayText ?? '';
+      _commentaryCtrl.text = existing.commentary ?? '';
       setState(() {
         _essayGrade = existing.essayGrade;
         _isPassed = existing.isPassed;
@@ -156,6 +160,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
       _engAnsweredCtrl.clear();
       _engTotalCtrl.clear();
       _essayTextCtrl.clear();
+      _commentaryCtrl.clear();
       setState(() {
         _essayGrade = null;
         _isPassed = null;
@@ -426,6 +431,50 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                                     child: _cefrChip(g),
                                   )),
                             ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.comment_rounded, color: AppTheme.textSecondary, size: 18),
+                              const SizedBox(width: 8),
+                              Text('Commentary / Feedback',
+                                  style: GoogleFonts.nunito(
+                                      color: AppTheme.textSecondary,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500)),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          TextField(
+                            controller: _commentaryCtrl,
+                            maxLines: 3,
+                            style: GoogleFonts.nunito(color: AppTheme.textPrimary, fontSize: 14),
+                            decoration: InputDecoration(
+                              hintText: 'Add feedback for the call center...',
+                              hintStyle: GoogleFonts.nunito(color: AppTheme.textMuted, fontSize: 14),
+                              filled: true,
+                              fillColor: AppTheme.surface,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: const BorderSide(color: AppTheme.border),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: const BorderSide(color: AppTheme.border),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: const BorderSide(color: AppTheme.accent, width: 2),
+                              ),
+                              contentPadding: const EdgeInsets.all(16),
+                            ),
                           ),
                         ],
                       ),
