@@ -25,10 +25,10 @@ class _LoginScreenState extends State<LoginScreen>
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
 
-  // Demo credentials
+  // Credentials
   static const Map<UserRole, Map<String, String>> _credentials = {
-    UserRole.callCenter: {'username': 'callcenter', 'password': '1234'},
-    UserRole.examinator: {'username': 'examinator', 'password': '1234'},
+    UserRole.callCenter: {'username': 'amirfattoyev', 'password': 'exam2026'},
+    UserRole.examinator: {'username': 'exam', 'password': '2026exam'},
   };
 
   @override
@@ -288,11 +288,6 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
 
                           const SizedBox(height: 20),
-                          Center(
-                            child: Text('Demo: username/1234',
-                                style: GoogleFonts.nunito(
-                                    color: AppTheme.textMuted, fontSize: 12)),
-                          ),
                         ],
                       ),
                     ),
@@ -333,8 +328,8 @@ class _LoginScreenState extends State<LoginScreen>
         onTap: () => setState(() {
           _selectedRole = role;
           _usernameController.text = role == UserRole.callCenter
-              ? 'callcenter'
-              : 'examinator';
+              ? 'amirfattoyev'
+              : 'exam';
         }),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
