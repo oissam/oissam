@@ -92,9 +92,12 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
               ),
               const SizedBox(height: 24),
               
-              Row(
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
                 children: [
-                  Expanded(
+                  SizedBox(
+                    width: 180,
                     child: StatCard(
                       title: "Today's Exams",
                       value: todaySessions.toString(),
@@ -103,8 +106,8 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                       isDark: false,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
+                  SizedBox(
+                    width: 180,
                     child: StatCard(
                       title: 'Upcoming Exams',
                       value: upcomingSessions.toString(),
@@ -113,8 +116,8 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                       isDark: false,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
+                  SizedBox(
+                    width: 180,
                     child: StatCard(
                       title: 'Past Exams',
                       value: pastSessions.toString(),
@@ -123,8 +126,8 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                       isDark: false,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
+                  SizedBox(
+                    width: 180,
                     child: StatCard(
                       title: 'Passed Students',
                       value: passedCount.toString(),
@@ -133,8 +136,8 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                       isDark: false,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
+                  SizedBox(
+                    width: 180,
                     child: StatCard(
                       title: 'Failed Students',
                       value: failedCount.toString(),

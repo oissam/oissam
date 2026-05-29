@@ -976,11 +976,8 @@ class EssayTextController extends TextEditingController {
         children.add(TextSpan(text: text.substring(start, match.start), style: style));
       }
       children.add(TextSpan(
-        text: match.group(1), // Show the text without the tags, but wait: if we hide tags, cursor gets misaligned.
-        // So we MUST render the tags so the cursor matches the text length.
-        // We can just make the tags tiny or transparent, but transparent affects selection.
-        // Better: render the whole thing including tags but with red background.
-        // Actually, let's render tags in a muted color and the text in red.
+        // We MUST render the tags so the cursor matches the text length.
+        // We render tags in transparent/size 0 and the text in red.
         children: [
           TextSpan(text: '[m]', style: style?.copyWith(color: Colors.transparent, fontSize: 0)),
           TextSpan(
