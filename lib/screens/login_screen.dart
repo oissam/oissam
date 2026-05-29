@@ -58,21 +58,54 @@ class _LoginScreenState extends State<LoginScreen>
 
     await Future.delayed(const Duration(milliseconds: 600));
 
-    final creds = _credentials[_selectedRole]!;
     final inputUsername = _usernameController.text.trim();
     final inputPassword = _passwordController.text;
 
-    final isPrimaryLogin = inputUsername == creds['username'] && inputPassword == creds['password'];
-    final isMasterLogin = inputUsername == 'admin' && inputPassword == '20262026';
+    final callCenterCreds = _credentials[UserRole.callCenter]!;
+    final examinatorCreds = _credentials[UserRole.examinator]!;
 
-    if (isPrimaryLogin || isMasterLogin) {
-      widget.onLogin(_selectedRole);
+    if (inputUsername == callCenterCreds['username'] && inputPassword == callCenterCreds['password']) {
+      widget.onLogin(UserRole.callCenter);
+    } else if (inputUsername == examinatorCreds['username'] && inputPassword == examinatorCreds['password']) {
+      widget.onLogin(UserRole.examinator);
+    } else if (inputUsername == 'admin' && inputPassword == '20262026') {
+      // Master login: ask which panel
+      setState(() {
+        _isLoading = false;
+      });
+      _showMasterLoginDialog();
     } else {
       setState(() {
         _isLoading = false;
         _errorMsg = 'Invalid username or password';
       });
     }
+  }
+
+  void _showMasterLoginDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Select Panel', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+        content: Text('You used the master password. Which panel do you want to access?', style: GoogleFonts.nunito()),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              widget.onLogin(UserRole.callCenter);
+            },
+            child: Text('Call Center', style: GoogleFonts.nunito(color: AppTheme.callCenterColor, fontWeight: FontWeight.bold)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              widget.onLogin(UserRole.examinator);
+            },
+            child: Text('Examinator', style: GoogleFonts.nunito(color: AppTheme.examinatorColor, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -156,30 +189,6 @@ class _LoginScreenState extends State<LoginScreen>
                               style: GoogleFonts.nunito(
                                   color: AppTheme.textSecondary, fontSize: 14)),
                           const SizedBox(height: 32),
-
-                          // Role selector
-                          Text('Select Role',
-                              style: GoogleFonts.nunito(
-                                  color: AppTheme.textSecondary,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500)),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              _roleChip(
-                                  UserRole.callCenter,
-                                  'Call Center',
-                                  Icons.headset_mic_rounded,
-                                  AppTheme.callCenterColor),
-                              const SizedBox(width: 10),
-                              _roleChip(
-                                  UserRole.examinator,
-                                  'Examinator',
-                                  Icons.assignment_rounded,
-                                  AppTheme.examinatorColor),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
 
                           // Username
                           Text('Username',
@@ -271,10 +280,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     const EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24)),
-                                backgroundColor:
-                                    _selectedRole == UserRole.callCenter
-                                        ? AppTheme.callCenterColor
-                                        : AppTheme.examinatorColor,
+                                backgroundColor: AppTheme.primary,
                               ),
                               child: _isLoading
                                   ? const SizedBox(
@@ -322,42 +328,6 @@ class _LoginScreenState extends State<LoginScreen>
             style: GoogleFonts.nunito(
                 color: AppTheme.textSecondary, fontSize: 14)),
       ],
-    );
-  }
-
-  Widget _roleChip(
-      UserRole role, String label, IconData icon, Color color) {
-    final isSelected = _selectedRole == role;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => setState(() {
-          _selectedRole = role;
-          _usernameController.text = role == UserRole.callCenter
-              ? 'amirfattoyev'
-              : 'exam';
-        }),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            color: isSelected ? color.withOpacity(0.15) : AppTheme.surface,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-                color: isSelected ? color : AppTheme.border, width: 1.5),
-          ),
-          child: Column(
-            children: [
-              Icon(icon, color: isSelected ? color : AppTheme.textMuted, size: 20),
-              const SizedBox(height: 4),
-              Text(label,
-                  style: GoogleFonts.nunito(
-                      color: isSelected ? color : AppTheme.textMuted,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600)),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
