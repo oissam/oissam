@@ -174,6 +174,18 @@ class _ManageScheduleScreenState extends State<ManageScheduleScreen> {
                       setState(() {
                         _selectedDate = selectedDay;
                         _times = DataService.getTimesForDate(_dateStr);
+                        
+                        if (selectedDay.weekday == DateTime.monday || 
+                            selectedDay.weekday == DateTime.wednesday || 
+                            selectedDay.weekday == DateTime.friday) {
+                          _timeCtrl.text = '14:00';
+                        } else if (selectedDay.weekday == DateTime.tuesday || 
+                                   selectedDay.weekday == DateTime.thursday || 
+                                   selectedDay.weekday == DateTime.saturday) {
+                          _timeCtrl.text = '10:00';
+                        } else {
+                          _timeCtrl.clear();
+                        }
                       });
                     },
                     eventLoader: (day) {

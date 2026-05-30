@@ -38,6 +38,7 @@ class _CallCenterShellState extends State<CallCenterShell> {
     _NavItem('Register Student', Icons.person_add_rounded),
     _NavItem('Passed Students', Icons.check_circle_outline),
     _NavItem('Failed Students', Icons.cancel_outlined),
+    _NavItem('Manage Schedule', Icons.edit_calendar_rounded),
   ];
 
   Widget get _body {
@@ -48,6 +49,7 @@ class _CallCenterShellState extends State<CallCenterShell> {
         });
       case 2: return CCFilteredStudentsScreen(isPassed: true);
       case 3: return CCFilteredStudentsScreen(isPassed: false);
+      case 4: return ManageScheduleScreen();
       default: return Center(child: Text('Under Construction'));
     }
   }
@@ -85,7 +87,6 @@ class _ExaminatorShellState extends State<ExaminatorShell> {
   static final _navItems = [
     _NavItem('Students', Icons.people_rounded),
     _NavItem('Timetable', Icons.calendar_month_rounded),
-    _NavItem('Manage Schedule', Icons.edit_calendar_rounded),
     _NavItem('Enter Results', Icons.assignment_turned_in_rounded),
   ];
 
@@ -93,8 +94,7 @@ class _ExaminatorShellState extends State<ExaminatorShell> {
     switch (_selectedIndex) {
       case 0: return ExStudentListScreen();
       case 1: return TimetableScreen();
-      case 2: return ManageScheduleScreen();
-      case 3: return EnterResultsScreen();
+      case 2: return EnterResultsScreen();
       default: return SizedBox.shrink();
     }
   }
