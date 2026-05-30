@@ -151,26 +151,26 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
               SizedBox(height: 24),
 
               // Filters
-              Row(
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   _filterDropdown(
                       'Date',
                       _filterDate,
                       [null, ...uniqueDates],
                       (v) => setState(() => _filterDate = v)),
-                  SizedBox(width: 12),
                   _filterDropdown(
                       'Room',
                       _filterRoom,
                       [null, ...DataService.rooms],
                       (v) => setState(() => _filterRoom = v)),
-                  SizedBox(width: 12),
                   _filterDropdown(
                       'Time',
                       _filterTime,
                       [null, ...DataService.getAllTimes()],
                       (v) => setState(() => _filterTime = v)),
-                  SizedBox(width: 12),
                   if (_filterDate != null ||
                       _filterRoom != null ||
                       _filterTime != null)
@@ -180,10 +180,8 @@ class _ExStudentListScreenState extends State<ExStudentListScreen> {
                         _filterRoom = null;
                         _filterTime = null;
                       }),
-                      icon: Icon(Icons.clear, size: 16),
-                      label: Text('Clear Filters'),
-                      style: TextButton.styleFrom(
-                          foregroundColor: AppTheme.textSecondary),
+                      icon: Icon(Icons.clear, size: 18),
+                      label: Text('Clear'),
                     ),
                 ],
               ),

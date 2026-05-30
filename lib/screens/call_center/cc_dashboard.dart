@@ -69,122 +69,144 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Stats row
-              Row(
-                children: [
-                  Expanded(
-                    child: StatCard(
-                      title: 'Total Students',
-                      value: allStudents.length.toString(),
-                      icon: Icons.people_alt_rounded,
-                      color: AppTheme.accent,
-                      isDark: false,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: StatCard(
-                      title: 'Results Ready',
-                      value: withResults.toString(),
-                      icon: Icons.check_circle_outline,
-                      color: AppTheme.success,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: StatCard(
-                      title: 'Passed Students',
-                      value: passedStudents.toString(),
-                      icon: Icons.thumb_up_alt_outlined,
-                      color: AppTheme.success,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: StatCard(
-                      title: 'Failed Students',
-                      value: failedStudents.toString(),
-                      icon: Icons.thumb_down_alt_outlined,
-                      color: AppTheme.danger,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: StatCard(
-                      title: 'Awaiting',
-                      value: (allStudents.length - withResults).toString(),
-                      icon: Icons.hourglass_bottom_rounded,
-                      color: AppTheme.warning,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: StatCard(
-                      title: "Today's Exams",
-                      value: todayExams.toString(),
-                      icon: Icons.today_rounded,
-                      color: AppTheme.accent,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: StatCard(
-                      title: 'Upcoming Exams',
-                      value: upcomingExams.toString(),
-                      icon: Icons.next_plan_outlined,
-                      color: AppTheme.accent,
-                    ),
-                  ),
-                ],
+              // Stats row
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final isMobile = constraints.maxWidth < 800;
+                  final double cardWidth = isMobile
+                      ? (constraints.maxWidth - 12) / 2
+                      : (constraints.maxWidth - (6 * 12)) / 7;
+
+                  return Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: [
+                      SizedBox(
+                        width: cardWidth,
+                        child: StatCard(
+                          title: 'Total Students',
+                          value: allStudents.length.toString(),
+                          icon: Icons.people_alt_rounded,
+                          color: AppTheme.accent,
+                          isDark: false,
+                        ),
+                      ),
+                      SizedBox(
+                        width: cardWidth,
+                        child: StatCard(
+                          title: 'Results Ready',
+                          value: withResults.toString(),
+                          icon: Icons.check_circle_outline,
+                          color: AppTheme.success,
+                        ),
+                      ),
+                      SizedBox(
+                        width: cardWidth,
+                        child: StatCard(
+                          title: 'Passed Students',
+                          value: passedStudents.toString(),
+                          icon: Icons.thumb_up_alt_outlined,
+                          color: AppTheme.success,
+                        ),
+                      ),
+                      SizedBox(
+                        width: cardWidth,
+                        child: StatCard(
+                          title: 'Failed Students',
+                          value: failedStudents.toString(),
+                          icon: Icons.thumb_down_alt_outlined,
+                          color: AppTheme.danger,
+                        ),
+                      ),
+                      SizedBox(
+                        width: cardWidth,
+                        child: StatCard(
+                          title: 'Awaiting',
+                          value: (allStudents.length - withResults).toString(),
+                          icon: Icons.hourglass_bottom_rounded,
+                          color: AppTheme.warning,
+                        ),
+                      ),
+                      SizedBox(
+                        width: cardWidth,
+                        child: StatCard(
+                          title: "Today's Exams",
+                          value: todayExams.toString(),
+                          icon: Icons.today_rounded,
+                          color: AppTheme.accent,
+                        ),
+                      ),
+                      SizedBox(
+                        width: isMobile ? constraints.maxWidth : cardWidth,
+                        child: StatCard(
+                          title: 'Upcoming Exams',
+                          value: upcomingExams.toString(),
+                          icon: Icons.next_plan_outlined,
+                          color: AppTheme.accent,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               SizedBox(height: 28),
 
               // Search + filter row
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      onChanged: (v) => setState(() => _searchQuery = v),
-                      style: AppTextStyle.body,
-                      decoration: InputDecoration(
-                        hintText: 'Search by name, grade, or phone...',
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: AppTheme.textMuted,
-                          size: 18,
-                        ),
-                        filled: true,
-                        fillColor: AppTheme.card,
-                        hoverColor: Colors.transparent,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide(color: AppTheme.border),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide(color: AppTheme.border),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide(
-                            color: AppTheme.accent,
-                            width: 2,
+              // Search + filter row
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final isMobile = constraints.maxWidth < 800;
+                  return Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: isMobile ? constraints.maxWidth : 300,
+                        child: TextField(
+                          onChanged: (v) => setState(() => _searchQuery = v),
+                          style: AppTextStyle.body,
+                          decoration: InputDecoration(
+                            hintText: 'Search by name, grade, or phone...',
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: AppTheme.textMuted,
+                              size: 18,
+                            ),
+                            filled: true,
+                            fillColor: AppTheme.card,
+                            hoverColor: Colors.transparent,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide(color: AppTheme.border),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide(color: AppTheme.border),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide(
+                                color: AppTheme.accent,
+                                width: 2,
+                              ),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
                           ),
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
+                      ),
+                      ...['All', 'Pending', 'Results Ready'].map(
+                        (tab) => Padding(
+                          padding: EdgeInsets.only(left: 8),
+                          child: _filterChip(tab),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  ...['All', 'Pending', 'Results Ready'].map(
-                    (tab) => Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: _filterChip(tab),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                }
               ),
               SizedBox(height: 20),
 
