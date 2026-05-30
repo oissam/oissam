@@ -49,7 +49,7 @@ class Student {
         'exam_time': examTime,
         'exam_room': examRoom,
         'registered_at': registeredAt.toIso8601String(),
-        // 'commentary': commentary, // Temporarily disabled because column doesn't exist in Supabase
+        'commentary': commentary,
       };
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
@@ -116,7 +116,7 @@ class ExamResult {
         'essay_grade': essayGrade,
         'essay_text': essayText,
         'is_passed': isPassed,
-        // 'commentary': commentary, // Temporarily disabled because column doesn't exist in Supabase
+        'commentary': commentary,
         'entered_at': enteredAt.toIso8601String(),
       };
 
