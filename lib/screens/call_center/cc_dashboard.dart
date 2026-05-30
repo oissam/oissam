@@ -63,9 +63,10 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
         final todayExams = allStudents.where((s) => s.examDate == todayStr).map((s) => '${s.examTime}-${s.examRoom}').toSet().length;
         final upcomingExams = allStudents.where((s) => '${s.examDate} ${s.examTime}'.compareTo(nowStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
 
-        return Padding(
-          padding: EdgeInsets.all(32),
-          child: Column(
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(32),
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Stats row
@@ -211,51 +212,49 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
               SizedBox(height: 20),
 
               // Table
-              Expanded(
-                child: _filtered.isEmpty
-                    ? _emptyState()
-                    : Container(
-                        decoration: BoxDecoration(
-                          color: AppTheme.card,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppTheme.border),
-                        ),
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            return SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  minWidth: 900,
-                                ),
-                                child: SizedBox(
-                                  width: constraints.maxWidth > 900 ? constraints.maxWidth : 900,
-                                  child: Column(
-                                    children: [
-                                      _tableHeader(),
-                                      Expanded(
-                                        child: ListView.separated(
-                                          itemCount: _filtered.length,
-                                          separatorBuilder: (_, _) => Divider(
-                                            height: 1,
-                                            color: AppTheme.border,
-                                          ),
-                                          itemBuilder: (context, i) =>
-                                              _studentRow(_filtered[i]),
-                                        ),
+              _filtered.isEmpty
+                  ? _emptyState()
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: AppTheme.card,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppTheme.border),
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minWidth: 900,
+                              ),
+                              child: SizedBox(
+                                width: constraints.maxWidth > 900 ? constraints.maxWidth : 900,
+                                child: Column(
+                                  children: [
+                                    _tableHeader(),
+                                    ListView.separated(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: _filtered.length,
+                                      separatorBuilder: (_, _) => Divider(
+                                        height: 1,
+                                        color: AppTheme.border,
                                       ),
-                                    ],
-                                  ),
+                                      itemBuilder: (context, i) =>
+                                          _studentRow(_filtered[i]),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            );
-                          }
-                        ),
+                            ),
+                          );
+                        }
                       ),
-              ),
+                    ),
             ],
           ),
-        );
+        ));
       }
     );
   }

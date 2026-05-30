@@ -46,14 +46,18 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
         final IconData icon = widget.isPassed ? Icons.check_circle_outline : Icons.cancel_outlined;
         final Color color = widget.isPassed ? AppTheme.success : AppTheme.danger;
 
-        return Padding(
-          padding: EdgeInsets.all(32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: 16,
+                  runSpacing: 16,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: color.withValues(alpha: 0.15),
@@ -82,7 +86,6 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                       ),
                     ],
                   ),
-                  Spacer(),
                   // Local Search Input
                   Container(
                     width: 240,
@@ -123,9 +126,10 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                 ],
               ),
               SizedBox(height: 24),
-              Expanded(
-                child: list.isEmpty
-                    ? Center(
+              list.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 40),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -136,13 +140,14 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                                     color: AppTheme.textMuted, fontSize: 16)),
                           ],
                         ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                          color: AppTheme.card,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppTheme.border),
-                        ),
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: AppTheme.card,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppTheme.border),
+                      ),
                         child: LayoutBuilder(
                           builder: (context, constraints) {
                             return SingleChildScrollView(
@@ -156,13 +161,13 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                                   child: Column(
                                     children: [
                                       _tableHeader(),
-                                      Expanded(
-                                        child: ListView.separated(
-                                          itemCount: list.length,
-                                          separatorBuilder: (_, _) => Divider(
-                                          height: 1, color: AppTheme.border),
-                                      itemBuilder: (ctx, i) => _studentRow(list[i]),
-                                    ),
+                                      ListView.separated(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: list.length,
+                                        separatorBuilder: (_, _) => Divider(
+                                        height: 1, color: AppTheme.border),
+                                    itemBuilder: (ctx, i) => _studentRow(list[i]),
                                   ),
                                 ],
                               ),
@@ -171,11 +176,9 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                         );
                       }
                     ),
-                  ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
       }
     );
   }
