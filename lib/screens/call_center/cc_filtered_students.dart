@@ -171,15 +171,17 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
                                   ),
                                 ],
                               ),
-                            ),
-                          ),
-                        );
-                      }
-                    ),
-            ],
-          ),
-        ));
-      }
+                            ), // SizedBox
+                          ), // ConstrainedBox
+                        ); // SingleChildScrollView
+                      } // builder
+                    ), // LayoutBuilder
+                  ), // Container
+              ], // children
+            ), // Column
+          ), // Padding
+        ); // SingleChildScrollView
+      } // ValueListenableBuilder builder
     );
   }
 
@@ -227,134 +229,142 @@ class _CCFilteredStudentsScreenState extends State<CCFilteredStudentsScreen> {
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Name
-            Expanded(
-              flex: 3,
-              child: Row(
-                children: [
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: AppTheme.accent.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
+            Row(
+              children: [
+                // Name
+                Expanded(
+                  flex: 3,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: Color(0x26374151), // accent 15%
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${s.firstName[0]}${s.lastName[0]}',
+                            style: AppTextStyle.label.copyWith(
+                                color: AppTheme.accent, fontSize: 13),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(s.fullName, style: AppTextStyle.body),
+                      ),
+                    ],
+                  ),
+                ),
+                // Contact
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    s.phone1,
+                    style: GoogleFonts.nunito(
+                        color: AppTheme.textSecondary, fontSize: 13),
+                  ),
+                ),
+                // Grade/Lang
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: AppTheme.accent.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text('G${s.studentClass}',
+                            style: GoogleFonts.nunito(
+                                color: AppTheme.accent,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                      SizedBox(width: 8),
+                      Text(s.language.substring(0, 2).toUpperCase(),
+                          style: GoogleFonts.nunito(
+                              color: AppTheme.textSecondary,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                ),
+                // Exam Info
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(s.examDate,
+                          style: GoogleFonts.nunito(
+                              color: AppTheme.textPrimary,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600)),
+                      Text('${s.examTime} - ${s.examRoom}',
+                          style: GoogleFonts.nunito(
+                              color: AppTheme.textSecondary, fontSize: 11)),
+                    ],
+                  ),
+                ),
+                // Actions
+                SizedBox(
+                  width: 80,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: Icon(Icons.chevron_right_rounded,
+                          color: AppTheme.textMuted),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) =>
+                              StudentProfileDialog(student: s, result: result),
+                        );
+                      },
                     ),
-                    child: Center(
+                  ),
+                ),
+              ],
+            ),
+            if (result != null && result.commentary != null && result.commentary!.isNotEmpty) ...[
+              SizedBox(height: 12),
+              Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppTheme.background,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: AppTheme.border),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.comment_rounded, size: 16, color: AppTheme.textMuted),
+                    SizedBox(width: 8),
+                    Expanded(
                       child: Text(
-                        '${s.firstName[0]}${s.lastName[0]}',
+                        result.commentary!,
                         style: GoogleFonts.nunito(
-                          color: AppTheme.accent,
-                          fontWeight: FontWeight.w700,
+                          color: AppTheme.textSecondary,
+                          fontSize: 13,
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          s.fullName,
-                          style: GoogleFonts.nunito(
-                            color: AppTheme.textPrimary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          'ID: ${s.id.substring(0, 6)}',
-                          style: GoogleFonts.nunito(
-                            color: AppTheme.textMuted,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Contact
-            Expanded(
-              flex: 2,
-              child: Text(
-                s.phone1,
-                style: GoogleFonts.nunito(
-                    color: AppTheme.textSecondary, fontSize: 13),
-              ),
-            ),
-            // Grade/Lang
-            Expanded(
-              flex: 2,
-              child: Row(
-                children: [
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppTheme.accent.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text('G${s.studentClass}',
-                        style: GoogleFonts.nunito(
-                            color: AppTheme.accent,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700)),
-                  ),
-                  SizedBox(width: 8),
-                  Text(s.language.substring(0, 2).toUpperCase(),
-                      style: GoogleFonts.nunito(
-                          color: AppTheme.textSecondary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600)),
-                ],
-              ),
-            ),
-            // Exam Info
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(s.examDate,
-                      style: GoogleFonts.nunito(
-                          color: AppTheme.textPrimary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600)),
-                  Text('${s.examTime} - ${s.examRoom}',
-                      style: GoogleFonts.nunito(
-                          color: AppTheme.textSecondary, fontSize: 11)),
-                ],
-              ),
-            ),
-            // Actions
-            SizedBox(
-              width: 80,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                  icon: Icon(Icons.chevron_right_rounded,
-                      color: AppTheme.textMuted),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) =>
-                          StudentProfileDialog(student: s, result: result),
-                    );
-                  },
+                  ],
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),
     );
   }
 }
-
-

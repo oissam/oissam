@@ -63,9 +63,11 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
         final todayExams = allStudents.where((s) => s.examDate == todayStr).map((s) => '${s.examTime}-${s.examRoom}').toSet().length;
         final upcomingExams = allStudents.where((s) => '${s.examDate} ${s.examTime}'.compareTo(nowStr) > 0).map((s) => '${s.examDate}-${s.examTime}-${s.examRoom}').toSet().length;
 
+        final isMobile = MediaQuery.sizeOf(context).width < 800;
+
         return SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(32),
+            padding: EdgeInsets.all(isMobile ? 16 : 32),
             child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -325,7 +327,10 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
       hoverColor: AppTheme.cardHover.withValues(alpha: 0.5),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
           children: [
             // Name + avatar
             Expanded(
@@ -469,8 +474,38 @@ class _CallCenterDashboardState extends State<CallCenterDashboard> {
             ),
           ],
         ),
-      ),
-    );
+        if (hasResult && result!.commentary != null && result.commentary!.isNotEmpty) ...[
+          SizedBox(height: 12),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppTheme.background,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppTheme.border),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.comment_rounded, size: 16, color: AppTheme.textMuted),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    result.commentary!,
+                    style: GoogleFonts.nunito(
+                      color: AppTheme.textSecondary,
+                      fontSize: 13,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ],
+    ), // Column
+    ), // Padding
+  ); // InkWell
   }
 
   Widget _cell(String text) {

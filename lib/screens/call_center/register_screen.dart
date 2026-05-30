@@ -78,23 +78,35 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
       commentary: _commentaryCtrl.text.trim().isEmpty ? null : _commentaryCtrl.text.trim(),
     );
 
-    await DataService.addStudent(student);
-    if (mounted) {
-      setState(() => _isSaving = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.white),
-              SizedBox(width: 8),
-              Text('${student.fullName} registered successfully!'),
-            ],
+    try {
+      await DataService.addStudent(student);
+      if (mounted) {
+        setState(() => _isSaving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('${student.fullName} registered successfully!'),
+              ],
+            ),
+            backgroundColor: AppTheme.success,
           ),
-          backgroundColor: AppTheme.success,
-        ),
-      );
-      _clearForm();
-      widget.onSaved?.call();
+        );
+        _clearForm();
+        widget.onSaved?.call();
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to register student: $e'),
+            backgroundColor: AppTheme.danger,
+          ),
+        );
+      }
     }
   }
 
@@ -323,7 +335,17 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         icon: Icons.meeting_room_outlined,
                         items: DataService.rooms
                             .map(
-                              (r) => DropdownMenuItem(value: r, child: Text(r)),
+                              (r) {
+                                final occupancy = _selectedDate != null && _selectedTime != null 
+                                    ? DataService.getRoomOccupancy(_selectedDate!, _selectedTime!, r) 
+                                    : 0;
+                                final isFull = occupancy >= 23;
+                                return DropdownMenuItem(
+                                  value: isFull ? null : r,
+                                  enabled: !isFull,
+                                  child: Text(isFull ? '$r (Full)' : '$r ($occupancy/23)'),
+                                );
+                              },
                             )
                             .toList(),
                         onChanged: (v) => setState(() => _selectedRoom = v),
@@ -362,7 +384,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                               width: 16,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                color: Colors.white,
+                                color: AppTheme.isDark ? Colors.black : Colors.white,
                               ),
                             )
                           : Icon(Icons.save_rounded, size: 18),

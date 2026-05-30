@@ -221,10 +221,14 @@ class DataService {
     }).toList()..sort();
   }
 
-  static List<String> getRegisterableTimesForDate(String date) {
+  static List<String> getRegisterableTimesForDate(String dateStr) {
     final now = DateTime.now();
-    final times = _schedules[date]?.toList() ?? [];
-    return times.where((timeStr) => _isAtLeastOneHourAway(date, timeStr, now)).toList()..sort();
+    final times = _schedules[dateStr] ?? [];
+    return times.where((timeStr) => _isAtLeastOneHourAway(dateStr, timeStr, now)).toList()..sort();
+  }
+
+  static int getRoomOccupancy(String date, String time, String room) {
+    return _students.where((s) => s.examDate == date && s.examTime == time && s.examRoom == room).length;
   }
 
   static List<String> getAllTimes() {

@@ -176,21 +176,41 @@ class _ShellLayout extends StatelessWidget {
           ],
         ),
         body: body,
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppTheme.surface,
-          selectedItemColor: AppTheme.accent,
-          unselectedItemColor: AppTheme.textMuted,
-          currentIndex: selectedIndex,
-          onTap: onSelect,
-          type: BottomNavigationBarType.fixed,
-          selectedLabelStyle: GoogleFonts.nunito(fontWeight: FontWeight.w700, fontSize: 12),
-          unselectedLabelStyle: GoogleFonts.nunito(fontWeight: FontWeight.w600, fontSize: 11),
-          items: navItems.map((item) {
-            return BottomNavigationBarItem(
-              icon: Icon(item.icon),
-              label: item.label,
+        bottomNavigationBar: ValueListenableBuilder<ThemeMode>(
+          valueListenable: AppTheme.themeNotifier,
+          builder: (context, themeMode, _) {
+            final isDark = themeMode == ThemeMode.dark;
+            return BottomNavigationBar(
+              backgroundColor: AppTheme.surface,
+              selectedItemColor: AppTheme.accent,
+              unselectedItemColor: AppTheme.textMuted,
+              currentIndex: selectedIndex,
+              onTap: (index) {
+                if (index == navItems.length) {
+                  // Theme toggler pressed
+                  AppTheme.themeNotifier.value =
+                      isDark ? ThemeMode.light : ThemeMode.dark;
+                } else {
+                  onSelect(index);
+                }
+              },
+              type: BottomNavigationBarType.fixed,
+              selectedLabelStyle: GoogleFonts.nunito(fontWeight: FontWeight.w700, fontSize: 12),
+              unselectedLabelStyle: GoogleFonts.nunito(fontWeight: FontWeight.w600, fontSize: 11),
+              items: [
+                ...navItems.map((item) {
+                  return BottomNavigationBarItem(
+                    icon: Icon(item.icon),
+                    label: item.label,
+                  );
+                }),
+                BottomNavigationBarItem(
+                  icon: Icon(isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
+                  label: 'Theme',
+                ),
+              ],
             );
-          }).toList(),
+          }
         ),
       );
     }

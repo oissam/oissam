@@ -107,12 +107,19 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
       isPassed: _isPassed,
       enteredAt: DateTime.now(),
     );
-    await DataService.saveResult(result);
-    if (mounted) {
-      setState(() => _isSaving = false);
-      _snack(
-          'Results saved for ${_selectedStudent!.fullName}', AppTheme.success);
-      _clearForm();
+    try {
+      await DataService.saveResult(result);
+      if (mounted) {
+        setState(() => _isSaving = false);
+        _snack(
+            'Results saved for ${_selectedStudent!.fullName}', AppTheme.success);
+        _clearForm();
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+        _snack('Failed to save results: $e', AppTheme.danger);
+      }
     }
   }
 
@@ -560,13 +567,19 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                         ),
                         SizedBox(width: 16),
                         ElevatedButton.icon(
-                          onPressed: _isSaving ? null : _save,
+                          onPressed: _isSaving ? null : () async {
+                            try {
+                              await _save();
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+                            }
+                          },
                           icon: _isSaving
                               ? SizedBox(
                                   height: 16,
                                   width: 16,
                                   child: CircularProgressIndicator(
-                                      strokeWidth: 2, color: Colors.white),
+                                      strokeWidth: 2, color: AppTheme.isDark ? Colors.black : Colors.white),
                                 )
                               : Icon(Icons.save_rounded, size: 18),
                           label: Text(

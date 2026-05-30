@@ -289,13 +289,13 @@ class _LoginScreenState extends State<LoginScreen>
                                       width: 18,
                                       child: CircularProgressIndicator(
                                           strokeWidth: 2,
-                                          color: Colors.white),
+                                          color: AppTheme.isDark ? Colors.black : Colors.white),
                                     )
                                   : Text('Sign In',
                                       style: GoogleFonts.nunito(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600,
-                                          color: Colors.white)),
+                                          color: AppTheme.isDark ? Colors.black : Colors.white)),
                             ),
                           ),
 
