@@ -8,6 +8,7 @@ import 'call_center/cc_filtered_students.dart';
 import 'examinator/ex_screens.dart';
 import 'examinator/enter_results.dart';
 import 'examinator/manage_schedule.dart';
+import 'examinator/ex_statistics.dart';
 
 // ── Nav Item Model ────────────────────────────────────────────────────────
 
@@ -88,6 +89,7 @@ class _ExaminatorShellState extends State<ExaminatorShell> {
     _NavItem('Students', Icons.people_rounded),
     _NavItem('Timetable', Icons.calendar_month_rounded),
     _NavItem('Enter Results', Icons.assignment_turned_in_rounded),
+    _NavItem('Statistics', Icons.bar_chart_rounded),
   ];
 
   Widget get _body {
@@ -95,6 +97,7 @@ class _ExaminatorShellState extends State<ExaminatorShell> {
       case 0: return ExStudentListScreen();
       case 1: return TimetableScreen();
       case 2: return EnterResultsScreen();
+      case 3: return ExStatisticsScreen();
       default: return SizedBox.shrink();
     }
   }
@@ -490,7 +493,7 @@ class _SidebarItemState extends State<_SidebarItem> {
                 Icon(
                   widget.icon,
                   size: 26,
-                  color: widget.isActive ? Colors.white : AppTheme.textSecondary,
+                  color: widget.isActive ? AppTheme.background : AppTheme.textSecondary,
                 ),
                 Expanded(
                   child: AnimatedOpacity(
@@ -501,7 +504,7 @@ class _SidebarItemState extends State<_SidebarItem> {
                       child: Text(
                         widget.label,
                         style: GoogleFonts.nunito(
-                          color: widget.isActive ? Colors.white : AppTheme.textPrimary,
+                          color: widget.isActive ? AppTheme.background : AppTheme.textPrimary,
                           fontSize: 15,
                           fontWeight: widget.isActive ? FontWeight.w700 : FontWeight.w600,
                         ),
