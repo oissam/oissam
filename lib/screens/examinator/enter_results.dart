@@ -89,10 +89,6 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
       _snack('Please select an Essay CEFR grade', AppTheme.warning);
       return;
     }
-    if (_isPassed == null) {
-      _snack('Please select if the student passed or failed', AppTheme.warning);
-      return;
-    }
 
     setState(() => _isSaving = true);
     final result = ExamResult(
@@ -211,7 +207,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                           color: AppTheme.textPrimary,
                           fontSize: 22,
                           fontWeight: FontWeight.w700)),
-                  Text('Enter scores and the smart calculator will do the rest',
+                  Text('Enter scores — then go to Review Results to set Pass / Fail',
                       style: GoogleFonts.nunito(
                           color: AppTheme.textSecondary, fontSize: 13)),
                 ],
@@ -505,65 +501,29 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                           ),
                         ),
                         Spacer(),
-                        Row(
-                          children: [
-                            Text(
-                              'Status:',
-                              style: GoogleFonts.nunito(
-                                color: AppTheme.textSecondary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                        // Hint about Review Results tab
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: AppTheme.accent.withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: AppTheme.accent.withValues(alpha: 0.2)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.info_outline, size: 15, color: AppTheme.accent),
+                              SizedBox(width: 8),
+                              Text(
+                                'Pass / Fail is set in the Review Results tab',
+                                style: GoogleFonts.nunito(
+                                  color: AppTheme.accent,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 12),
-                            SegmentedButton<bool>(
-                              emptySelectionAllowed: true,
-                              segments: [
-                                ButtonSegment(
-                                  value: true,
-                                  icon: Icon(Icons.check_circle_outline, size: 22),
-                                  label: Text('Passed'),
-                                ),
-                                ButtonSegment(
-                                  value: false,
-                                  icon: Icon(Icons.cancel_outlined, size: 22),
-                                  label: Text('Failed'),
-                                ),
-                              ],
-                              selected: _isPassed == null ? {} : {_isPassed!},
-                              onSelectionChanged: (set) {
-                                setState(() => _isPassed = set.first);
-                              },
-                              style: ButtonStyle(
-                                padding: WidgetStatePropertyAll(
-                                  EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                                ),
-                                textStyle: WidgetStatePropertyAll(
-                                  GoogleFonts.nunito(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                backgroundColor: WidgetStateProperty.resolveWith((states) {
-                                  if (states.contains(WidgetState.selected)) {
-                                    return _isPassed == true
-                                        ? AppTheme.success.withValues(alpha: 0.15)
-                                        : AppTheme.danger.withValues(alpha: 0.15);
-                                  }
-                                  return Colors.transparent;
-                                }),
-                                foregroundColor: WidgetStateProperty.resolveWith((states) {
-                                  if (states.contains(WidgetState.selected)) {
-                                    return _isPassed == true
-                                        ? AppTheme.success
-                                        : AppTheme.danger;
-                                  }
-                                  return AppTheme.textMuted;
-                                }),
-                              ),
-                              showSelectedIcon: false,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(width: 16),
                         ElevatedButton.icon(
@@ -571,7 +531,7 @@ class _EnterResultsScreenState extends State<EnterResultsScreen> {
                             try {
                               await _save();
                             } catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: \$e')));
                             }
                           },
                           icon: _isSaving

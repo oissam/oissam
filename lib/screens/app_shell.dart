@@ -9,6 +9,7 @@ import 'examinator/ex_screens.dart';
 import 'examinator/enter_results.dart';
 import 'examinator/manage_schedule.dart';
 import 'examinator/ex_statistics.dart';
+import 'examinator/review_results.dart';
 
 // ── Nav Item Model ────────────────────────────────────────────────────────
 
@@ -89,6 +90,7 @@ class _ExaminatorShellState extends State<ExaminatorShell> {
     _NavItem('Students', Icons.people_rounded),
     _NavItem('Timetable', Icons.calendar_month_rounded),
     _NavItem('Enter Results', Icons.assignment_turned_in_rounded),
+    _NavItem('Review Results', Icons.how_to_vote_rounded),
     _NavItem('Statistics', Icons.bar_chart_rounded),
   ];
 
@@ -97,7 +99,8 @@ class _ExaminatorShellState extends State<ExaminatorShell> {
       case 0: return ExStudentListScreen();
       case 1: return TimetableScreen();
       case 2: return EnterResultsScreen();
-      case 3: return ExStatisticsScreen();
+      case 3: return ReviewResultsScreen();
+      case 4: return ExStatisticsScreen();
       default: return SizedBox.shrink();
     }
   }
