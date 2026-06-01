@@ -4,6 +4,7 @@ import '../../models/models.dart';
 import '../../services/data_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/shared_widgets.dart';
+import '../../widgets/student_profile_dialog.dart';
 
 class ReviewResultsScreen extends StatefulWidget {
   ReviewResultsScreen({super.key});
@@ -331,53 +332,77 @@ class _ReviewResultsScreenState extends State<ReviewResultsScreen> {
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
-          // Student info
+          // Student info (tappable → opens profile dialog)
           Expanded(
             flex: 3,
-            child: Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: rowAccent.withValues(alpha: 0.12),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${student.firstName[0]}${student.lastName[0]}',
-                      style: GoogleFonts.nunito(
-                        color: rowAccent,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => StudentProfileDialog(
+                      student: student,
+                      result: result,
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: rowAccent.withValues(alpha: 0.12),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${student.firstName[0]}${student.lastName[0]}',
+                          style: GoogleFonts.nunito(
+                            color: rowAccent,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        student.fullName,
-                        style: GoogleFonts.nunito(
-                          color: AppTheme.textPrimary,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                student.fullName,
+                                style: GoogleFonts.nunito(
+                                  color: AppTheme.textPrimary,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(width: 6),
+                              Icon(
+                                Icons.open_in_new_rounded,
+                                size: 12,
+                                color: AppTheme.textMuted,
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '${student.examDate} • ${student.examTime} • ${student.examRoom}',
+                            style: GoogleFonts.nunito(
+                              color: AppTheme.textMuted,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${student.examDate} • ${student.examTime} • ${student.examRoom}',
-                        style: GoogleFonts.nunito(
-                          color: AppTheme.textMuted,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
 
