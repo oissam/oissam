@@ -4,7 +4,7 @@ import '../../models/models.dart';
 import '../../services/data_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/shared_widgets.dart';
-import '../../widgets/student_profile_dialog.dart';
+import '../../widgets/review_profile_dialog.dart';
 
 class ReviewResultsScreen extends StatefulWidget {
   ReviewResultsScreen({super.key});
@@ -341,7 +341,7 @@ class _ReviewResultsScreenState extends State<ReviewResultsScreen> {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (ctx) => StudentProfileDialog(
+                    builder: (ctx) => ReviewProfileDialog(
                       student: student,
                       result: result,
                     ),
